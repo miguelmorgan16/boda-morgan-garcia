@@ -871,74 +871,91 @@ document.getElementById("datos").addEventListener("click", async e => {
   catch (x) { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
 });
 
-/* ============ MÚSICA ORIGINAL (alegre, maqam Hijaz con ritmo maqsum; generada en el navegador) ============ */
+/* ============ MÚSICA ORIGINAL: balada romántica de "mil y una noches" (compuesta para esta página) ============ */
 let audio = null, sonando = false, timer = null;
-const N = { D2: 73.42, A2: 110, D3: 146.83, G3: 196, A3: 220, D4: 293.66, Eb4: 311.13, Fs4: 369.99, G4: 392, A4: 440, Bb4: 466.16, C5: 523.25, D5: 587.33, Eb5: 622.25 };
-// 32 tiempos: A, A', B, B' (frases de pregunta y respuesta)
-const A1 = [["D5",.5],["C5",.5],["Bb4",.5],["A4",.5],["Bb4",.5],["A4",.5],["G4",.5],["A4",.5],["Fs4",.5],["G4",.5],["A4",1],["A4",.5],["Bb4",.5],["A4",1]];
-const A2 = [["D5",.5],["C5",.5],["Bb4",.5],["A4",.5],["Bb4",.5],["A4",.5],["G4",.5],["A4",.5],["G4",.5],["Fs4",.5],["Eb4",.5],["Fs4",.5],["D4",2]];
-const B1 = [["A4",.5],["A4",.5],["D5",1],["D5",.5],["Eb5",.5],["D5",.5],["C5",.5],["Bb4",.5],["C5",.5],["D5",1],["A4",2]];
-const B2 = [["G4",.5],["A4",.5],["Bb4",.5],["C5",.5],["Bb4",.5],["A4",.5],["G4",.5],["Fs4",.5],["G4",.5],["Fs4",.5],["Eb4",.5],["Fs4",.5],["D4",2]];
-const MELODIA = [...A1, ...A2, ...B1, ...B2];
-const BAJO = ["D2", "D2", "G3", "D2", "D2", "D2", "A2", "D2"];   // una nota por compás (4 tiempos)
-const BPM = 116, T = 60 / BPM;
-function pulso(ctx, dest, f, t, dur, vol) {
-  const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), lp = ctx.createBiquadFilter(), g2 = ctx.createGain();
-  o.type = "triangle"; o2.type = "square"; o.frequency.value = f; o2.frequency.value = f * 2.002;
-  lp.type = "lowpass"; lp.frequency.setValueAtTime(5200, t); lp.frequency.exponentialRampToValueAtTime(1100, t + .25);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(.28, dur * .95));
-  g2.gain.value = .12;
-  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(lp); lp.connect(dest);
-  const fin = t + Math.max(.3, dur) + .1; o.start(t); o2.start(t); o.stop(fin); o2.stop(fin);
+const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+// Acordes (MIDI): D, Bm, G, A, D, Bm, Gm (toque árabe), A
+const ACORDES = [
+  { bajo: 38, notas: [50, 57, 62, 66] }, { bajo: 35, notas: [47, 54, 59, 62] },
+  { bajo: 43, notas: [43, 50, 55, 59] }, { bajo: 45, notas: [45, 52, 57, 61] },
+  { bajo: 38, notas: [50, 57, 62, 66] }, { bajo: 35, notas: [47, 54, 59, 62] },
+  { bajo: 43, notas: [43, 50, 55, 58] }, { bajo: 45, notas: [45, 52, 57, 61] }
+];
+// Melodía original, 4 tiempos por compás: [nota MIDI, duración]
+const MELODIA = [
+  [[66,1],[69,1],[74,1.5],[73,.5]], [[71,2],[69,1],[66,1]],
+  [[67,1],[71,1],[74,1],[76,1]],    [[73,3],[69,1]],
+  [[74,1],[78,1.5],[76,.5],[74,1]], [[71,1.5],[73,.5],[74,1],[71,1]],
+  [[70,1],[69,.5],[67,.5],[69,1],[70,1]], [[73,.5],[74,.5],[76,1],[69,2]]
+];
+const BPM = 92, T = 60 / BPM;
+function reverb(ctx) {
+  const len = ctx.sampleRate * 2.6, buf = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
+  const cv = ctx.createConvolver(); cv.buffer = buf; return cv;
+}
+function flauta(ctx, dest, f, t, dur) {
+  const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), g2 = ctx.createGain();
+  const lfo = ctx.createOscillator(), lg = ctx.createGain();
+  o.type = "sine"; o2.type = "triangle"; o.frequency.value = f; o2.frequency.value = f; g2.gain.value = .25;
+  lfo.frequency.value = 5.2; lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(f * .008, t + Math.min(.4, dur * .6));
+  lfo.connect(lg); lg.connect(o.frequency); lg.connect(o2.frequency);
+  const fin = t + dur * .98;
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.2, t + .07);
+  g.gain.setValueAtTime(.2, Math.max(t + .08, fin - .12)); g.gain.exponentialRampToValueAtTime(.0001, fin + .15);
+  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(dest);
+  [o, o2, lfo].forEach(x => { x.start(t); x.stop(fin + .2); });
+}
+function arpa(ctx, dest, f, t, vol) {
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = "triangle"; o.frequency.value = f;
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .004); g.gain.exponentialRampToValueAtTime(.0001, t + 1.4);
+  o.connect(g); g.connect(dest); o.start(t); o.stop(t + 1.5);
+}
+function cuerdas(ctx, dest, notas, t, dur) {
+  const lp = ctx.createBiquadFilter(), g = ctx.createGain();
+  lp.type = "lowpass"; lp.frequency.value = 1300;
+  g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(.05, t + .5); g.gain.setValueAtTime(.05, t + dur - .3); g.gain.linearRampToValueAtTime(.0001, t + dur + .3);
+  lp.connect(g); g.connect(dest);
+  notas.slice(1).forEach(m => [-6, 6].forEach(det => { const o = ctx.createOscillator(); o.type = "sawtooth"; o.frequency.value = hz(m); o.detune.value = det; o.connect(lp); o.start(t); o.stop(t + dur + .4); }));
 }
 function bajo(ctx, dest, f, t) {
   const o = ctx.createOscillator(), g = ctx.createGain();
   o.type = "sine"; o.frequency.value = f;
-  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.35, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + T * 1.4);
-  o.connect(g); g.connect(dest); o.start(t); o.stop(t + T * 1.5);
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.28, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + T * 1.8);
+  o.connect(g); g.connect(dest); o.start(t); o.stop(t + T * 2);
 }
-let ruido = null;
-function golpe(ctx, dest, t, tipo) {
-  if (tipo === "dum") {
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(55, t + .16);
-    g.gain.setValueAtTime(.7, t); g.gain.exponentialRampToValueAtTime(.0001, t + .22);
-    o.connect(g); g.connect(dest); o.start(t); o.stop(t + .25);
-    return;
-  }
-  if (!ruido) { const len = ctx.sampleRate * .12; ruido = ctx.createBuffer(1, len, ctx.sampleRate); const d = ruido.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1; }
-  const s = ctx.createBufferSource(), hp = ctx.createBiquadFilter(), g = ctx.createGain();
-  s.buffer = ruido; hp.type = "highpass";
-  if (tipo === "tek") { hp.frequency.value = 2200; g.gain.setValueAtTime(.32, t); g.gain.exponentialRampToValueAtTime(.0001, t + .07); }
-  else { hp.frequency.value = 7000; g.gain.setValueAtTime(.09, t); g.gain.exponentialRampToValueAtTime(.0001, t + .1); } // riq (pandereta)
-  s.connect(hp); hp.connect(g); g.connect(dest); s.start(t); s.stop(t + .12);
+function tambor(ctx, dest, t, vol) {
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(50, t + .2);
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + .3);
+  o.connect(g); g.connect(dest); o.start(t); o.stop(t + .35);
+}
+function platillo(ctx, dest, t) {   // címbalo de dedo
+  [2637, 3951].forEach(f => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = f;
+    g.gain.setValueAtTime(.025, t); g.gain.exponentialRampToValueAtTime(.0001, t + 1.6); o.connect(g); g.connect(dest); o.start(t); o.stop(t + 1.7); });
 }
 function iniciarMusica() {
   const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
   audio = audio || new AC(); audio.resume();
-  const master = audio.createGain(); master.gain.value = 0; master.gain.linearRampToValueAtTime(.3, audio.currentTime + 1);
-  master.connect(audio.destination); audio._master = master;
-  const dr = [N.D3, N.A3].map(f => { const o = audio.createOscillator(), g = audio.createGain(); o.type = "sine"; o.frequency.value = f; g.gain.value = .035; o.connect(g); g.connect(master); o.start(); return o; });
-  audio._drone = dr;
-  const total = MELODIA.reduce((x, n) => x + n[1], 0);   // 32 tiempos
-  // maqsum en corcheas: DUM tek . tek DUM . tek .
-  const MAQSUM = ["dum", "tek", null, "tek", "dum", null, "tek", null];
+  const master = audio.createGain(); master.gain.value = 0; master.gain.linearRampToValueAtTime(.55, audio.currentTime + 1.5);
+  const sala = reverb(audio), humedo = audio.createGain(); humedo.gain.value = .35;
+  master.connect(audio.destination); master.connect(sala); sala.connect(humedo); humedo.connect(audio.destination);
+  audio._master = master; audio._drone = []; audio._humedo = humedo;
+  const ARP = [0, 1, 2, 3, 2, 1, 2, 3];
   function programar(desde) {
-    let t = desde;
-    for (const [n, d] of MELODIA) { pulso(audio, master, N[n], t, d * T, .2); t += d * T; }
-    for (let c = 0; c < total / 4; c++) {
+    ACORDES.forEach((ac, c) => {
       const t0 = desde + c * 4 * T;
-      bajo(audio, master, N[BAJO[c % BAJO.length]], t0);
-      bajo(audio, master, N[BAJO[c % BAJO.length]], t0 + 2 * T);
-      for (let e = 0; e < 8; e++) {
-        const te = t0 + e * T / 2;
-        if (MAQSUM[e]) golpe(audio, master, te, MAQSUM[e]);
-        golpe(audio, master, te, "riq");
-      }
-    }
-    return desde + total * T;
+      cuerdas(audio, master, ac.notas, t0, 4 * T);
+      bajo(audio, master, hz(ac.bajo), t0); bajo(audio, master, hz(ac.bajo + 7), t0 + 2 * T);
+      ARP.forEach((k, e) => arpa(audio, master, hz(ac.notas[k] + 12), t0 + e * T / 2, e % 2 ? .05 : .08));
+      tambor(audio, master, t0, .3); tambor(audio, master, t0 + 1.5 * T, .15); tambor(audio, master, t0 + 2 * T, .22);
+      if (c % 2 === 0) platillo(audio, master, t0);
+      let t = t0; for (const [m, d] of MELODIA[c]) { flauta(audio, master, hz(m), t, d * T); t += d * T; }
+    });
+    return desde + ACORDES.length * 4 * T;
   }
-  let siguiente = programar(audio.currentTime + .2);
+  let siguiente = programar(audio.currentTime + .25);
   timer = setInterval(() => { if (audio.currentTime > siguiente - 2) siguiente = programar(siguiente); }, 400);
 }
 function pararMusica() {
@@ -946,7 +963,8 @@ function pararMusica() {
   if (audio && audio._master) {
     const m = audio._master, t = audio.currentTime;
     m.gain.cancelScheduledValues(t); m.gain.setValueAtTime(m.gain.value, t); m.gain.linearRampToValueAtTime(0, t + .6);
-    const dr = audio._drone; setTimeout(() => { dr.forEach(o => { try { o.stop(); } catch (e) {} }); m.disconnect(); }, 700);
+    const dr = audio._drone, hu = audio._humedo; if (hu) { hu.gain.setValueAtTime(hu.gain.value, t); hu.gain.linearRampToValueAtTime(0, t + 1.5); }
+    setTimeout(() => { dr.forEach(o => { try { o.stop(); } catch (e) {} }); m.disconnect(); }, 1600);
   }
 }
 document.getElementById("musica").addEventListener("click", e => {
