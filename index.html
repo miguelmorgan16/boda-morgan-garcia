@@ -938,10 +938,32 @@ function platillo(ctx, dest, t) {   // címbalo de dedo
   [2637, 3951].forEach(f => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = f;
     g.gain.setValueAtTime(.025, t); g.gain.exponentialRampToValueAtTime(.0001, t + 1.6); o.connect(g); g.connect(dest); o.start(t); o.stop(t + 1.7); });
 }
+/* iPhone: un <audio> silencioso en bucle pone el teléfono en modo "reproducción de medios",
+   así la música suena aunque el interruptor de silencio esté activado. */
+let silencio = null;
+function audioSilencioso() {
+  const sr = 8000, n = sr / 2, buf = new ArrayBuffer(44 + n), v = new DataView(buf);
+  const txt = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  txt(0, "RIFF"); v.setUint32(4, 36 + n, true); txt(8, "WAVEfmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+  v.setUint16(22, 1, true); v.setUint32(24, sr, true); v.setUint32(28, sr, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true);
+  txt(36, "data"); v.setUint32(40, n, true); for (let i = 0; i < n; i++) v.setUint8(44 + i, 128);
+  const a = new Audio(URL.createObjectURL(new Blob([buf], { type: "audio/wav" })));
+  a.loop = true; a.setAttribute("playsinline", ""); a.preload = "auto"; return a;
+}
 function iniciarMusica() {
   const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-  audio = audio || new AC(); audio.resume();
-  const master = audio.createGain(); master.gain.value = 0; master.gain.linearRampToValueAtTime(.55, audio.currentTime + 1.5);
+  try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+  try { silencio = silencio || audioSilencioso(); const pr = silencio.play(); if (pr) pr.catch(() => {}); } catch (e) {}
+  audio = audio || new AC();
+  // desbloqueo: un sonido vacío dentro del toque
+  const b = audio.createBuffer(1, 1, 22050), src = audio.createBufferSource(); src.buffer = b; src.connect(audio.destination); src.start(0);
+  const arrancar = () => { if (sonando) programarMusica(); };
+  if (audio.state !== "running") audio.resume().then(arrancar, arrancar); else arrancar();
+}
+function programarMusica() {
+  clearInterval(timer);
+  const ahora = audio.currentTime;
+  const master = audio.createGain(); master.gain.setValueAtTime(0, ahora); master.gain.linearRampToValueAtTime(.55, ahora + 1.5);
   const sala = reverb(audio), humedo = audio.createGain(); humedo.gain.value = .35;
   master.connect(audio.destination); master.connect(sala); sala.connect(humedo); humedo.connect(audio.destination);
   audio._master = master; audio._humedo = humedo;
@@ -964,6 +986,7 @@ function iniciarMusica() {
 }
 function pararMusica() {
   clearInterval(timer);
+  try { if (silencio) silencio.pause(); } catch (e) {}
   if (audio && audio._master) {
     const m = audio._master, t = audio.currentTime;
     m.gain.cancelScheduledValues(t); m.gain.setValueAtTime(m.gain.value, t); m.gain.linearRampToValueAtTime(0, t + .6);
@@ -971,6 +994,9 @@ function pararMusica() {
     setTimeout(() => { dr.forEach(o => { try { o.stop(); } catch (e) {} }); m.disconnect(); }, 1600);
   }
 }
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && sonando) document.getElementById("musica").click();
+});
 document.getElementById("musica").addEventListener("click", e => {
   sonando = !sonando; e.currentTarget.setAttribute("aria-pressed", sonando);
   document.getElementById("musica-ico").setAttribute("d", sonando ? "M7 5h4v14H7zM13 5h4v14h-4z" : "M8 5v14l11-7z");
