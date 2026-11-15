@@ -871,24 +871,24 @@ document.getElementById("datos").addEventListener("click", async e => {
   catch (x) { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
 });
 
-/* ============ MÚSICA ORIGINAL: balada romántica de "mil y una noches" (compuesta para esta página) ============ */
+/* ============ MÚSICA ORIGINAL: balada romántica en escala árabe Hijaz (compuesta para esta página) ============ */
 let audio = null, sonando = false, timer = null;
 const hz = m => 440 * Math.pow(2, (m - 69) / 12);
-// Acordes (MIDI): D, Bm, G, A, D, Bm, Gm (toque árabe), A
+// Escala árabe Hijaz en Re. Acordes (MIDI): D, Gm, Cm, D, D, Gm, Eb (cadencia árabe), D
 const ACORDES = [
-  { bajo: 38, notas: [50, 57, 62, 66] }, { bajo: 35, notas: [47, 54, 59, 62] },
-  { bajo: 43, notas: [43, 50, 55, 59] }, { bajo: 45, notas: [45, 52, 57, 61] },
-  { bajo: 38, notas: [50, 57, 62, 66] }, { bajo: 35, notas: [47, 54, 59, 62] },
-  { bajo: 43, notas: [43, 50, 55, 58] }, { bajo: 45, notas: [45, 52, 57, 61] }
+  { bajo: 38, notas: [50, 57, 62, 66] }, { bajo: 43, notas: [43, 50, 55, 58] },
+  { bajo: 36, notas: [48, 55, 60, 63] }, { bajo: 38, notas: [50, 57, 62, 66] },
+  { bajo: 38, notas: [50, 57, 62, 66] }, { bajo: 43, notas: [43, 50, 55, 58] },
+  { bajo: 39, notas: [51, 55, 58, 63] }, { bajo: 38, notas: [50, 57, 62, 66] }
 ];
-// Melodía original, 4 tiempos por compás: [nota MIDI, duración]
+// Melodía original en Hijaz, 4 tiempos por compás: [nota MIDI, duración]
 const MELODIA = [
-  [[66,1],[69,1],[74,1.5],[73,.5]], [[71,2],[69,1],[66,1]],
-  [[67,1],[71,1],[74,1],[76,1]],    [[73,3],[69,1]],
-  [[74,1],[78,1.5],[76,.5],[74,1]], [[71,1.5],[73,.5],[74,1],[71,1]],
-  [[70,1],[69,.5],[67,.5],[69,1],[70,1]], [[73,.5],[74,.5],[76,1],[69,2]]
+  [[69,2],[70,.5],[69,.5],[66,1]],        [[67,1.5],[69,.5],[70,2]],
+  [[72,1],[70,.5],[69,.5],[67,2]],        [[66,1],[63,1],[62,2]],
+  [[74,1.5],[72,.5],[70,1],[69,1]],       [[70,1],[69,.5],[67,.5],[74,2]],
+  [[75,1],[74,.5],[72,.5],[70,1],[67,1]], [[69,1],[66,.5],[63,.5],[62,2]]
 ];
-const BPM = 92, T = 60 / BPM;
+const BPM = 72, T = 60 / BPM;
 function reverb(ctx) {
   const len = ctx.sampleRate * 2.6, buf = ctx.createBuffer(2, len, ctx.sampleRate);
   for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6); }
@@ -941,7 +941,8 @@ function iniciarMusica() {
   const master = audio.createGain(); master.gain.value = 0; master.gain.linearRampToValueAtTime(.55, audio.currentTime + 1.5);
   const sala = reverb(audio), humedo = audio.createGain(); humedo.gain.value = .35;
   master.connect(audio.destination); master.connect(sala); sala.connect(humedo); humedo.connect(audio.destination);
-  audio._master = master; audio._drone = []; audio._humedo = humedo;
+  audio._master = master; audio._humedo = humedo;
+  audio._drone = [38, 45].map(m => { const o = audio.createOscillator(), g = audio.createGain(); o.type = "sine"; o.frequency.value = hz(m); g.gain.value = .05; o.connect(g); g.connect(master); o.start(); return o; });
   const ARP = [0, 1, 2, 3, 2, 1, 2, 3];
   function programar(desde) {
     ACORDES.forEach((ac, c) => {
@@ -949,7 +950,7 @@ function iniciarMusica() {
       cuerdas(audio, master, ac.notas, t0, 4 * T);
       bajo(audio, master, hz(ac.bajo), t0); bajo(audio, master, hz(ac.bajo + 7), t0 + 2 * T);
       ARP.forEach((k, e) => arpa(audio, master, hz(ac.notas[k] + 12), t0 + e * T / 2, e % 2 ? .05 : .08));
-      tambor(audio, master, t0, .3); tambor(audio, master, t0 + 1.5 * T, .15); tambor(audio, master, t0 + 2 * T, .22);
+      tambor(audio, master, t0, .26); tambor(audio, master, t0 + 2 * T, .2); tambor(audio, master, t0 + 2.5 * T, .1);
       if (c % 2 === 0) platillo(audio, master, t0);
       let t = t0; for (const [m, d] of MELODIA[c]) { flauta(audio, master, hz(m), t, d * T); t += d * T; }
     });
