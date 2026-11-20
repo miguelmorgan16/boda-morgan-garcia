@@ -143,6 +143,17 @@ a { color: inherit; }
 .divisor { display: block; width: 100%; height: 56px; color: var(--blanco); }
 .divisor.celeste { color: var(--celeste-2); }
 
+/* ---------- personal pass ---------- */
+.pase { background: var(--blanco); padding-block: clamp(48px, 7vw, 72px) 0; }
+.pase-tarjeta { max-width: 560px; width: calc(100% - 24px); margin: 0 auto; padding: clamp(28px, 5vw, 44px) clamp(20px, 5vw, 44px); display: grid; justify-items: center; gap: 14px; text-align: center; }
+.pase-nombre { margin: 0; font-family: var(--f-nombres); font-size: clamp(2.2rem, 6vw, 3rem); line-height: 1.2; padding: 0 .2em; text-wrap: balance; }
+.pase-nombre.oro-texto { background: linear-gradient(180deg, #d4ac55 0%, #a97c25 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pase-texto { margin: 0; max-width: 42ch; color: var(--tinta); }
+.pase-cupos { display: grid; gap: 2px; justify-items: center; padding: 10px 26px; border-top: 1px solid var(--oro-claro); border-bottom: 1px solid var(--oro-claro); }
+.pase-cupos b { font: 400 2.6rem/1 var(--f-titulo); color: var(--oro); }
+.pase-cupos span { font-size: .78rem; letter-spacing: .22em; text-transform: uppercase; color: var(--tinta-suave); }
+.nombre-fijo { opacity: .85; }
+
 /* ---------- story ---------- */
 .historia { background: var(--blanco); }
 .capitulo { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 6vw, 72px); align-items: center; }
@@ -379,6 +390,19 @@ input::placeholder { color: rgba(255,255,255,.45); }
 </header>
 
 <main>
+<!-- ================= PASE PERSONAL (solo con enlace personalizado) ================= -->
+<section class="pase" id="pase" hidden>
+  <div class="wrap">
+    <div class="pase-tarjeta palacio">
+      <span class="eyebrow" data-i18n="pase-eyebrow">Invitación personal</span>
+      <p class="pase-nombre oro-texto" id="pase-nombre"></p>
+      <p class="pase-texto" id="pase-texto"></p>
+      <div class="pase-cupos"><b id="pase-n"></b><span id="pase-lugares"></span></div>
+      <a class="btn oro" href="#rsvp"><svg><use href="#i-estrella"/></svg><span data-i18n="pase-btn">Confirmar asistencia</span></a>
+      <svg class="e1"><use href="#i-estrella"/></svg><svg class="e2"><use href="#i-estrella"/></svg><svg class="e3"><use href="#i-estrella"/></svg><svg class="e4"><use href="#i-estrella"/></svg>
+    </div>
+  </div>
+</section>
 <!-- ================= STORY ================= -->
 <section class="sec historia" id="historia">
   <div class="wrap">
@@ -490,7 +514,7 @@ input::placeholder { color: rgba(255,255,255,.45); }
     <div class="sec-head">
       <svg class="estrella"><use href="#i-estrella"/></svg>
       <span class="eyebrow" data-i18n="info-eyebrow">Para nuestros invitados</span>
-      <h2 data-i18n="info-titulo">Lo que deben saber</h2>
+      <h2 data-i18n="info-titulo">Detalles importantes</h2>
     </div>
 
     <div class="tarjetas">
@@ -511,7 +535,7 @@ input::placeholder { color: rgba(255,255,255,.45); }
       <div class="tarjeta">
         <span class="eyebrow" data-i18n="hotel-eyebrow">Hospedaje</span>
         <h3>InterContinental Miramar</h3>
-        <p data-i18n="hotel-p">Tenemos una tarifa especial para nuestros invitados en el hotel de la recepción. Al reservar, mencionen:</p>
+        <p data-i18n="hotel-p">Tenemos una tarifa especial para nuestros invitados en el hotel de la recepción. Al reservar, mencione:</p>
         <span class="codigo-hotel">Boda Morgan García</span>
         <p class="nota"><span data-i18n="hotel-tel">Reservas:</span> <span class="tel">+507 206-8888</span></p>
       </div>
@@ -525,14 +549,14 @@ input::placeholder { color: rgba(255,255,255,.45); }
 
     <div class="viaje">
       <div>
-        <span class="eyebrow" data-i18n="viaje-eyebrow">Si vienes de fuera</span>
+        <span class="eyebrow" data-i18n="viaje-eyebrow">Para quienes viajan desde el exterior</span>
         <h3 data-i18n="viaje-titulo">Viajando a Panamá</h3>
       </div>
       <div class="viaje-grid">
         <div class="viaje-item"><svg><use href="#i-avion"/></svg><div><b data-i18n="v1-t">Aeropuerto de Tocumen (PTY)</b><span data-i18n="v1-p">A unos 30–40 minutos del hotel, según el tráfico. Uber y taxis están disponibles en el aeropuerto.</span></div></div>
         <div class="viaje-item"><svg><use href="#i-sol"/></svg><div><b data-i18n="v2-t">Clima en febrero</b><span data-i18n="v2-p">Temporada seca: días soleados de unos 30–32 °C y noches agradables. Ropa ligera y protector solar.</span></div></div>
         <div class="viaje-item"><svg><use href="#i-dolar"/></svg><div><b data-i18n="v3-t">Moneda</b><span data-i18n="v3-p">En Panamá se usa el dólar estadounidense (USD). Las tarjetas se aceptan en casi todas partes.</span></div></div>
-        <div class="viaje-item"><svg><use href="#i-pasaporte"/></svg><div><b data-i18n="v4-t">Documentos</b><span data-i18n="v4-p">Revisa los requisitos de entrada para tu país con tu aerolínea o consulado antes de viajar.</span></div></div>
+        <div class="viaje-item"><svg><use href="#i-pasaporte"/></svg><div><b data-i18n="v4-t">Documentos</b><span data-i18n="v4-p">Le recomendamos revisar los requisitos de entrada de su país con la aerolínea o el consulado antes de viajar.</span></div></div>
         <div class="viaje-item"><svg><use href="#i-pin"/></svg><div><b data-i18n="v5-t">Qué conocer</b><span data-i18n="v5-p">Casco Antiguo, el Canal de Panamá en Miraflores, la Cinta Costera y la Calzada de Amador.</span></div></div>
         <div class="viaje-item"><svg><use href="#i-auto"/></svg><div><b data-i18n="v6-t">Moverse por la ciudad</b><span data-i18n="v6-p">Uber funciona muy bien. De la parroquia al hotel son unos 20–30 minutos en auto.</span></div></div>
       </div>
@@ -548,7 +572,7 @@ input::placeholder { color: rgba(255,255,255,.45); }
     <div class="sec-head">
       <svg class="estrella"><use href="#i-estrella"/></svg>
       <span class="eyebrow" data-i18n="galeria-eyebrow">Galería</span>
-      <h2 data-i18n="galeria-titulo">Síguenos a nuestro mundo ideal</h2>
+      <h2 data-i18n="galeria-titulo">Un vistazo a nuestro mundo ideal</h2>
     </div>
     <div class="fotos">
       <button type="button" data-src="img/siguenos.jpg"><img src="img/siguenos.jpg" alt="Yorleyns guiando a Miguel en el templo de Hatshepsut" loading="lazy"></button>
@@ -577,28 +601,28 @@ input::placeholder { color: rgba(255,255,255,.45); }
   <div class="wrap" style="position:relative">
     <div class="sec-head">
       <svg class="estrella"><use href="#i-estrella"/></svg>
-      <span class="eyebrow" data-i18n="rsvp-eyebrow">Te esperamos</span>
-      <h2 data-i18n="rsvp-titulo">¿Nos acompañas?</h2>
+      <span class="eyebrow" data-i18n="rsvp-eyebrow">Su presencia nos honra</span>
+      <h2 data-i18n="rsvp-titulo">Confirmación de asistencia</h2>
     </div>
 
     <div class="cierre-grid">
       <!-- RSVP -->
       <div class="panel">
-        <h3 data-i18n="rsvp-h">Confirma tu asistencia</h3>
-        <p class="limite" data-i18n="rsvp-limite">Por favor confirma antes del 13 de enero de 2027.</p>
-        <p data-i18n="rsvp-cupos">Las invitaciones son personales. Por favor confirma solo los cupos indicados en tu invitación.</p>
+        <h3 data-i18n="rsvp-h">R.S.V.P.</h3>
+        <p class="limite" data-i18n="rsvp-limite">Se ruega confirmar antes del 13 de enero de 2027.</p>
+        <p data-i18n="rsvp-cupos">Las invitaciones son personales. Agradecemos confirmar únicamente los cupos indicados en su invitación.</p>
         <form id="form-rsvp" novalidate>
           <label for="r-nombre"><span data-i18n="r-nombre">Nombre y apellido</span>
             <input id="r-nombre" name="nombre" type="text" autocomplete="name" required>
           </label>
           <fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px">
-            <legend style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--oro-claro);margin-bottom:6px" data-i18n="r-asiste">¿Asistirás?</legend>
+            <legend style="font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--oro-claro);margin-bottom:6px" data-i18n="r-asiste">Asistencia</legend>
             <div class="radios">
-              <label><input type="radio" name="asiste" id="r-si" value="Sí" checked><span data-i18n="r-si">Sí, ahí estaré</span></label>
-              <label><input type="radio" name="asiste" id="r-no" value="No"><span data-i18n="r-no">No podré asistir</span></label>
+              <label><input type="radio" name="asiste" id="r-si" value="Sí" checked><span data-i18n="r-si">Sí, con mucho gusto</span></label>
+              <label><input type="radio" name="asiste" id="r-no" value="No"><span data-i18n="r-no">Lamentablemente, no</span></label>
             </div>
           </fieldset>
-          <label for="r-personas" id="l-personas"><span data-i18n="r-personas">Cupos que confirmas (según tu invitación)</span>
+          <label for="r-personas" id="l-personas"><span data-i18n="r-personas">Cupos confirmados (según su invitación)</span>
             <select id="r-personas" name="personas">
               <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
             </select>
@@ -620,16 +644,16 @@ input::placeholder { color: rgba(255,255,255,.45); }
         <h3 data-i18n="reg-h">Regalos</h3>
         <div class="sobres">
           <svg viewBox="0 0 40 40" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="4" y="10" width="32" height="22" rx="2"/><path d="M4 12l16 11 16-11"/></g></svg>
-          <p data-i18n="reg-p">Su presencia es nuestro mejor regalo. Si desean tener un detalle con nosotros, en la recepción habrá una mesa de sobres (solo efectivo).</p>
+          <p data-i18n="reg-p">Su presencia es nuestro mejor regalo. Si desea tener un detalle con nosotros, en la recepción habrá una mesa de sobres (solo efectivo).</p>
         </div>
-        <p data-i18n="reg-p2">Si prefieren hacerlo por Yappy o transferencia, ingresen el código que aparece en su invitación:</p>
+        <p data-i18n="reg-p2">Para Yappy o transferencia, ingrese el código que aparece en su invitación:</p>
         <div class="bloqueado" id="bloqueado">
           <form class="fila-codigo" id="form-codigo">
             <label for="codigo" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" data-i18n="reg-codigo">Código de la invitación</label>
             <input id="codigo" name="codigo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" data-i18n-ph="reg-ph" placeholder="Código de la invitación">
             <button class="btn oro" type="submit" data-i18n="reg-ver">Ver datos</button>
           </form>
-          <p class="error" id="codigo-error" hidden data-i18n="reg-error">Ese código no es correcto. Revisa tu invitación e inténtalo de nuevo.</p>
+          <p class="error" id="codigo-error" hidden data-i18n="reg-error">El código no es correcto. Por favor, revíselo en su invitación e intente de nuevo.</p>
         </div>
         <div class="datos" id="datos" hidden></div>
       </div>
@@ -637,7 +661,7 @@ input::placeholder { color: rgba(255,255,255,.45); }
 
     <!-- CONTACT -->
     <div class="panel contacto">
-      <h3 data-i18n="cont-h">¿Tienes dudas?</h3>
+      <h3 data-i18n="cont-h">Para cualquier consulta</h3>
       <div class="contactos">
         <div class="contacto-item"><small data-i18n="cont-antes">Antes de la boda</small><b>Miguel</b><a href="https://wa.me/50760104662" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>6010-4662</a></div>
         <div class="contacto-item"><small data-i18n="cont-antes">Antes de la boda</small><b>Yorleyns</b><a href="https://wa.me/50765688411" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>6568-8411</a></div>
@@ -666,9 +690,12 @@ const GOOGLE_FORM = {
 };
 const REGALO = {"s":"bJ72DTBiMrbYAYUGMZwSAQ==","i":"Dp90dhq00isDwmHz","c":"hxIrZU/XBGwK9Iq6QvR9n6S070j28RZekFbIImj9NAqLuCBjjBz96KuWAfdPfA+odcK0b47WzfpxbGaUAxP8Ah6EByXshInySD+PkfErLywO6uWtm9R6xqFzvHq/burWIQMCigs/7LtAhmijTr0YH/cYwz+NTzGArdPWJb7kq7jtP758KK+/5BzuGH/V3+NhcHNwaNFDFXx6VrrEjIWxpLPIqgeG/Xd/bGjoiv3hqnE6GgRiybjp70kgL6R/oyRjRXZ2EkKxIkcjKro="};
 
+/* ============ INVITADOS (cifrados: cada enlace personal abre solo su propia tarjeta) ============ */
+const INVITADOS = /*INVITADOS*/{"s":"yPrL1YI+gflWSkfLv1DBMg==","r":[{"id":"1480a7c21a5d41e3e8dd3156","i":"2DJS9AE0nWBD4JTR","c":"IC6wepo3MDIHW+mbdCA5wGSqXnxyrQdsMn4zVtW5e1zThtJaSHtcsQ1IPIdd2Q4eSI7PWiN8S30rhr0HFo+C7de8K0AasuE4LoTtmDF3PZ7x2DTO/HmIrej2Eg=="},{"id":"77b75368123f209f188fdf95","i":"VuyhjNrahpgxLh6s","c":"inCJSXRU0t/Oqg1chxiw2sjjwd8DvkEYBYbcyn0YvruRulqrIBQxAyP9VmVGbxpP0JW9gO225CQNlCfilSkkAgOYuiAvAPZd9F6gnw=="},{"id":"49026137aa873511bf42361e","i":"Tgx3XZzfqxa0Ycq+","c":"2Dm6566p4ls5wyQrjaT9bUDr6DXkBCg/lJeMC+gTdT1fPuvOc2JKxz2D3bee41yC2otxwzo9ABQVSwZjfeZl4D3F2KjfRxPT/berHCMKOtyh"},{"id":"08c0a70ad7ffe0a41b7769aa","i":"+b1Z46XvhELIN6xi","c":"xDV1jlFHJMlYT99w0QV1LqrN1JM9kr/+JU4yl9NUWARNOQq/mDngmGHqsXNs65BQItFy7SS0DYVccZ5/rplk6T//yQBOv7o39Fgf2rLKZRs="},{"id":"3f368774573e1076e914ea3a","i":"6i6W+G32m+OYX1Iz","c":"GeRAmyZAwKFJLhJnC0sri66iEsZZeNzOrAy2GoHlZjHlueSSHWzgK2zCQM4B5PJICdab1BBspZctc2In3pZqeRzKnORaSiV+OLAaCXn28Qw="},{"id":"25b122ef7c4ca1dbfd4f3605","i":"58wGIsY/smDiapgd","c":"Hth0hHPj+LzssJmsCXQEtTTV4MnvifUrJFTLLSIk87DiLlGG1nyUJdrN4kS/wqnEgSmcy+rDW6sM8TbWrKRAXmjLTCxQZhh1sZDJfhiX"},{"id":"b1ceecf742318737596c2cfc","i":"i8Hn8zQslN7fu2is","c":"sK/R7rVRGr2k1QwfORhPvUnhQ2VjH3dQGCCju+rQf9QCom4N31MChKfSi5IPv+VsGeZO5Zm+NhTIVhdMQhkNKJEpbQKLykwfsAuFeBjky9dfJ+O+"},{"id":"4548e17dbd08ca8c7b81d8b0","i":"dUk9g1hkYQaQPiJw","c":"ViIHa5UgSIlYiWE3NJvzrE4cr11Khi5J66RZST0Xq8uNmCRFrDkl1iLbJO5dIQ5PmbvVy9saui1Ay8Y23OCNgUWK5DNpIU2kd/UR2Q8NimwoNaTjpBs="},{"id":"3dbf3a155b94b1bbba22e68d","i":"1hBXqP2XUTzWxjQX","c":"viJR4l3QDjBmdajt5kaSi7DoiImZWLYIqSFVppb0W5L0Nn9+CBfmYzN0W6m2gFnDfxXTLnBvHlUmq0bqm+X2bUgTPrtNcWQmQQuVHkGpfzHXPiXw"},{"id":"f1add6de40cdc4726362ad94","i":"RWLW6QnekYjeJMW4","c":"V6DUGNyQK+kxvbTYuk+RL7viF7X+RQzXEoZZ2xUS3fqpCM4DNz0BIe1eA4e8K2hyFvj39K+tF82H8Xz2m+0nxkv7qNFPaKsPiq80P2uP4iK8etTwmA=="},{"id":"b58dadebe64d90e8b45a5944","i":"FOmn82Vqehalmu6O","c":"PqhYNhbe31QPxlMUXI5xn6cHKjfYNutZ279GHLjZKxbQJrSjLsjitHmUn5t8pV4ot7YtJnt0SCCMJzLOeIrsv+Y5HD4ceq49sSTLDkuSb2arhg=="},{"id":"4da223291e18f1bc702e0e23","i":"hQAEH2rCJF9jGC3O","c":"qn/83sd0L1UTJkYG3HPICknNmb9vPSaPil1tvKX61yRNsxL0C+th1sktbNnv38jXpUAsRkU1HUtj/iGz3Cbh0GnaXxi+ynwYax9VDDe0tNBAL9u+cEU="},{"id":"0e25ec607b72a7d4ef9a5c39","i":"qqc7Y4s6FFIKl38l","c":"daqDfxJkCBI3+M4RWCfTeWjasZqYvuzmyTlpqOkc7jWH+N01SVOjWN7ud7CyS9eNQANTcTpSWzsqXvL9enHD6TcxGqRgdpXVr00K5qA="},{"id":"1b0574d2b78c4f1bbd629473","i":"5zwg2VvjnZJKQpXL","c":"wN0UDNy47ehd/5PQPaYoJ4hL6gxE64MkNGb0pmXyp9vCRTRiA0bGYa/6hkxnG/mCWaVqx9wHblHn9Rmw1RZWqVDGzpyo1tHLFHzFnSTUsHmxV8nk"},{"id":"5c4ff942a773381fa569dfe5","i":"Wzx6PZw1+X1OjYhA","c":"6a9BS6NkG7M+Vf2wbCMav3PYXL+c27R3pUCag3w0G+e/QvUIoEQdSeDRyd0cTcBnNL/MMFNjF7QXvd5jo4Y0g26LFbjI0gzhtznBJB9PKsNlrQ=="},{"id":"ef1bf1519707f7f9cea6d9bd","i":"K0yTmJOsRs98VFIs","c":"ajps/MeIRKTYLgfqzvUErq52VrcftsnZQP5BNsJLXKZSakMY8STy1VIEPh0ESiD1P1d9wgeeisfAkcHleEOnpfkyGm8ekRbYMrsweWCivg=="},{"id":"514304555f82903837151da3","i":"S3p/7O7vokKe5P0q","c":"wTVXEc7r4HkU92Uzf4yL/ibLUdg16uEdbUoqkaBhQsnHb03eG9tK4hObv/9o2CbPdx5pUw6Q/ZttoTMMJCesx2KObqe+jzzgzuqKmm0="},{"id":"de247cf63e8b8f247f3eb6b9","i":"2Qa4Kx4XwkCRmkNO","c":"24zPetIOpAUagYrVSHUSOEldX3eZUMxhRoBDN0VFcrbikzQIuNMNpyQvBUVhg902V+gGHxh07iHjWq5JSRhBUtAxu7O+OWk1B3bAPk+o6rLc8h025Fo="},{"id":"34fb276bc0074da355a58e33","i":"69oVKsgypUwMBkTl","c":"2EwwV7ds+9J5FRY3mso1+5nmLt7xr9g+vDWtQIkxVrTgUMYDsaDtssb1sE3toU0K78rfaHTg7rquQ07CCUCaXeU3ovRNKKwAeudeO6OgUw=="},{"id":"ebe6a1bbcf7a0c87e7e79aa1","i":"nTo/+PcyZkn7rmgf","c":"E8A7RQ3VTwgZnFZhFl2msAHKc8GvmsolchuxiDMooLPnDHU5HcDX3RDTHj5LUIWoFX6Gl8SJFkpZt+9MzVpUN8RMtx5206LbYyP+jBiL/yoKv/M="},{"id":"12b6233c8c9220daf484aa26","i":"ZnUJ9HlD/aF+7xta","c":"Id7er1dXt/r8JZ1gLunMTLok9+WEFK/Nx4nE109+UzDRpkpRqMkmEZ2tzawtC8xVCZsZkB+FhbKe+0FDAiOOTB6hAYTUrJ9gEgdD8TXX0PVpMCvzw3IE30HkKA=="},{"id":"cf7b61be9ad9e21782cd3a02","i":"5M21ijWJcqND4Rqt","c":"ga113Z7cm3qwUZCyskP6n/wC78KRBJqcVKhjseiqsl/cD7mSdtmuasbHMInjiqT3QgYuvHNGXMZGIluhcDlMZLPMBBtzV2P741buMBId1W+I"},{"id":"71e28b271eee0dee1adc4c0b","i":"dcrBk4orUPh4R5qK","c":"L8m7R5XpPx7WGIJV7THv/zQ+PV0jFop/qkOv9QARBFlhBKBmWZ+DvVBqBI03mVhF0RDYQez+C8h85LKWotEYI0SnxcquImGkwklK3xxX5ZM6wQ=="},{"id":"badfe5f784edcdd1fef46629","i":"tlA7wGtsJ9ZF3R+u","c":"RKGiD9DKQZ6ZeJsqeSAjj31XMn1uD+64pIevDlNWdQP845SZwphDidfCcPr1T9w5sqzwoBnljEU/1Lp8DGbd+OQEjVnlPmjxDXjLN/eEsv0="},{"id":"236cf0efa8d5985277227ab7","i":"zsPM9scJU+vafwWe","c":"06kH2vhH2XgauE282yWurN6b6fy9hpEwh/oDK3COA0Vy4Qj8SGN5mB+G6u/doA+qmw5QtSXHYmvJYTxYRqB7uzwTKmy6+yfPRSIMQOmxdZZg"},{"id":"3e8388de46812bc9179ec41f","i":"fDiZ58eKms5rsrB+","c":"ag518ty6cQyTOgccdZ3a4syalRp51/bgkDgOQST5yHBFPyaeUtbGtbqxfflCYfT2SMquRYo2mCRVpDQQUpI8O9d/AU+ZUIlxzpW3i0F3oT8="},{"id":"46f1a3fc31bf1fb4d414ce9c","i":"uL/uQ19rlIg1vCYi","c":"5SBGNQYJeIAaJm7xTLEBzxxklr+epum0bj+Y2cqEQoIw1KxhfZJVKcr9UMcdSKtuplOozkpu8G+xD2QNYMhN5/ai0anGOIcFON4W4Oi8bHI="},{"id":"fe195098f08d8369bd33289a","i":"L6kob+PNN49qDSiU","c":"326CAN1FxGPKcBRPYD1gb9DLV2+cEFlBtzU+28HyDPztjyZRG0syMemmUa3rgeWzCCPjif5r7S4l6XJtQzk8AdsMa+Pk1aM6YYFlY2AsSw=="},{"id":"98b473695364bb47d71118b1","i":"2jY0BMMipIYNW6+v","c":"hMBh1lc7+eKjX8ntnaSF93el0miTWngZxOBnbw2vuIcwwZ726MBntjQ6Plpw7Vy8XaFL4tb3pCKI3gUc+LNfW00Fla8gyceKBhv78HQvQL4L"},{"id":"bb531e7f22fc711a0b93e166","i":"R8xsJYjafde8Yr3F","c":"hcCcFkDZTxg7ye1djiiNmWq/vlHSw9Jeu9cU0FhZ068cLnTH1x/wBgsOs4iuzrTSG8peX4IuUTsv5c4eEen1GRPrljEUB5QmfYRunRzS"},{"id":"456209d08ece05b84f21cdd9","i":"ENUQQpZLxq5XsKvO","c":"sUcycCtk9OqudWG3oT/HmA/FnEfGQIjUOZBbvAIakGD/sMTNOkGyV6EUilmPjX0tADuQPT8qMZNZvzPEVq07/zurgUfAOQ+Iu6Mvba7rs9I="},{"id":"47bfc4d88695a8b3bd436a6f","i":"T0XxFa6FXcCJfuC7","c":"61CT7NjA7oo7XqXrcflHEtnfJWNTNDNuXlshaNIMWvWapC6woGczBRsSM5Hck55A1PXWBMo+q7IKX0WxM+pn+QF0qg4VibeMo6lgppJO"},{"id":"8a15cdff17afd3a153aea4a5","i":"cBGCJGyC2CT2Esnh","c":"bFumYXtL03uZQVJbCNpJXO5vP3OctfUvZo78CM80PczmQrlj9AQijcOW5cM7ji6foMRd4hs9zv4sIPyJ/geekVpOCeeZ//5TvBNid1OxUSOpE5ztn0fW"},{"id":"f68558355f5cfd9e1823d75b","i":"WfdUv3P9Y//FnvXx","c":"6GxPUv+BgMlgB6uRtbT8srY1kvkV1JHT3X40I6N+yZlgFO6UFRUjhs33fKsdBB5qXs9BNd81xLhdIoAqyw/rhRiZhgrPL+hMz8Y6za2PJNdNKAjsNGI="},{"id":"9870b4ada51dab45e0aa42a4","i":"BttXxNoajRB+doW8","c":"O8RHcs1NcdpafaRz2ylmwJCDNLs8AXzSQEzFe0ZGvarhSrKQuQDA6ZVb++YHpwlm0jBhW3f+bLIMXCMilnrkbndBOlVZYrPMGHYiR8FuoHwMkvA="},{"id":"6c9cf621bd42c12a77bebb07","i":"ZA53BqOBhIP7LXKA","c":"6+ARs6FVlW1vdEFbaqmXUkVnG0AL/u/RZ2fQTmBjEk180I7Lr8t8+LfFz1wmxzuD7ZrOgskkeuneHKoMxOG+2DghsaSxYkqxoZfXssDyRXdQQLHEMhKb"},{"id":"992a3ef2630ee983a6d11231","i":"cQJP1A9FQ0iqbb6b","c":"QHc4QFf5em9B+F59/VfjHO1BC7myqltjfvw7TKYKxVZiCo9nYyI16YEai84nh4MgfI2pMWk3YUCTUplnadkdVLUm5+WPnQIeMDVzihwRrywTP8lph4ayFLE="},{"id":"158f4d5c080cb57c8db7711f","i":"h0DRM9JL2gOsRE0O","c":"Nu+RT+tj7coIi96Zi/3225ozHyUQ9mKDahNsPsZqJI6p0d0aEdXFgC592vIoJVfdmK47R/nG5YLdr9vaOhLV37tfwQu3irg8BMjqeK6LoDjGiNbCseh/"},{"id":"e97f9868015422d296b5b8b9","i":"CWY47CNEtAXznn9o","c":"dpRbD5saFfTzA1MSxRIvnlytZCfD3rkE+l76KUBwBfieh3nVN++ZC6+N8cC90wx3OCjTaBi3kwV5VTTFL8maZZhShghbHrZ4D+F9yk898w=="},{"id":"1b180de78b23703b7667f265","i":"87Et7mUAnkFWaOrp","c":"wf0DUXGjm6/1dQTBPcxWmFFKAwmIrH65rYoeWp3GdIYwj5diLlSRiostNjZMKpg/fBn51vaWbEhvyHR2jMqmI9/tyLTa5/yQJ26HMJrKbqj5"},{"id":"ee4c51431de4e50ad3576833","i":"6BF6mdA8tHOc/vH0","c":"Rp3+1eTdj5HKw26rekGItthJ2+7BuxSjXGQsPeOsjIV+JxaoR0VTy2xVfwMeDKJ0PjpEsd4PcBshJqhgLxXdzACwc9nrh5sFD4MJIAWKQrk="},{"id":"ea08b6296620b3bc56635bf3","i":"Spk/TbeRWeK2bZVz","c":"9U6Q8qEU1oGGLwEGKY7vwDmk31CAeBRtfQNaC5cAugFvuUKuFs2LTZBfGMUHJE/gdn6Sl9d4VPrzf2vaGnT+GC3t6KCyZtHI+UZeGKHZ"},{"id":"2a6910c168d5f1fe8a533ee5","i":"jf2basZCUzOQhroB","c":"gIT3VV+uYbnQAQJHK2O4uEyqV2QEM5OTJH93oDzngXR1urcgbrPnWOGQJKPHJo3oKzPwOiBQ4enAyNsboDpSzCxV2i1FMdkEMEiGfH42Lh7c"},{"id":"6c4a05432a4b22f7d0bc753a","i":"E+m99a8WLkHbO4WJ","c":"8hPfW0tTTyiHz0XSpojI9vXZ9j2OuAl0X6aPpjgX0+5dSqLh/b3rKPrVAnXoaX5DHtk8oFxYnE0I/hPob8PXAm31xbuFRhem72f9lJ0ogUAzx+0LKIQhJQo="},{"id":"c5629fcf749867c3d8a7fb3a","i":"iDuiK/pG6TV7cSR6","c":"3fXegN5o0WHeOTqzOEr0MyS0Wq/BNYSixxXG8eTAMFUh4stJFcuEKZGuRKHTfgQWz/xMIM3epxgUPFaG+SPd0+ndyut/EAFw5crHHJ+wMNjLMuwE"},{"id":"2b8c7bbf1154813592fca573","i":"SW2EclLK3LHViH65","c":"x+wKvcTIdMHXiT7U8RItrUJ3LFgadhSu7UrTTZeHwRQYhKl+7PjM3RuqXXb5IkqzDgyHGBFtrq962oZzAiaGSqGPz+EZfD6eGZ1F0arODvQ5gA=="},{"id":"3ea15a24e747884280b8b809","i":"QlGzSttKIf0yo/Gr","c":"T//75WU5cW9F9P5XyhkeZRXuNC1RsuPw0xj0ZYWpa48xHrh0ErgoO5JZnb6bKyW7620BJfLrx1XzuIsHglULquQJ3bspGakc678etRQ="}]}/*FIN*/;
+
 /* ============ TEXTOS EN INGLÉS ============ */
 const EN = {
-  "musica": "Music", "nos-casamos": "With God's blessing, we're getting married",
+  "musica": "Music", "pase-eyebrow": "Personal invitation", "pase-btn": "Reply now", "nos-casamos": "With God's blessing, we're getting married",
   "fe-versiculo": "“A cord of three strands is not quickly broken.”", "fe-cita": "Ecclesiastes 4:12",
   "fe-texto": "God has been at the center of our story: He brought us together, has carried us through every step and gave us the miracle of our family. That is why we want to make this covenant before Him, surrounded by the people we love.",
   "familia-chip": "Our family", "cap3-titulo": "Our greatest blessing",
@@ -688,7 +715,7 @@ const EN = {
   "ev2": "Holy Mass", "ev3": "Free time", "ev3-p": "Travel to the hotel, check in and rest before the party.",
   "ev4": "Welcome cocktail", "ev5": "Reception", "ev5-p": "Dinner, dancing and an Arabian night in the Marina Ballroom.",
   "ev6": "End of the party", "ceremonia": "Holy Mass · 3:30 pm", "recepcion": "Reception · 7:00 pm",
-  "info-eyebrow": "For our guests", "info-titulo": "Good to know",
+  "info-eyebrow": "For our guests", "info-titulo": "Important details",
   "vest-eyebrow": "Dress code", "vest-titulo": "Formal, with Arabian touches",
   "vest-p": "Join our Arabian night with an accessory, a scarf or another Arabian-inspired detail.",
   "vest-reservados": "Colors reserved for the couple and the wedding party:",
@@ -703,10 +730,10 @@ const EN = {
   "v4-t": "Documents", "v4-p": "Check the entry requirements for your country with your airline or consulate before you travel.",
   "v5-t": "What to see", "v5-p": "Casco Antiguo, the Panama Canal at Miraflores, the Cinta Costera and the Amador Causeway.",
   "v6-t": "Getting around", "v6-p": "Uber works very well. The church is about 20–30 minutes by car from the hotel.",
-  "galeria-eyebrow": "Gallery", "galeria-titulo": "Follow us into our whole new world", "cerrar": "Close",
-  "rsvp-eyebrow": "We hope to see you", "rsvp-titulo": "Will you join us?",
-  "rsvp-h": "RSVP", "rsvp-limite": "Please reply by January 13, 2027.",
-  "r-nombre": "Full name", "r-asiste": "Will you attend?", "r-si": "Yes, I'll be there", "r-no": "Sadly, I can't make it",
+  "galeria-eyebrow": "Gallery", "galeria-titulo": "A glimpse of our whole new world", "cerrar": "Close",
+  "rsvp-eyebrow": "Your presence honors us", "rsvp-titulo": "Kindly reply",
+  "rsvp-h": "R.S.V.P.", "rsvp-limite": "The favor of a reply is requested by January 13, 2027.",
+  "r-nombre": "Full name", "r-asiste": "Attendance", "r-si": "Joyfully accepts", "r-no": "Regretfully declines",
   "r-personas": "Seats you are confirming (as shown on your invitation)",
   "rsvp-cupos": "Invitations are personal. Please confirm only the number of seats shown on your invitation.", "r-cancion": "A song that has to be played",
   "r-cancion-ph": "Artist – song", "r-enviar": "Send RSVP", "r-wa": "Send via WhatsApp",
@@ -715,7 +742,7 @@ const EN = {
   "reg-p2": "If you'd rather use Yappy or a bank transfer, enter the code printed on your invitation:",
   "reg-codigo": "Invitation code", "reg-ph": "Invitation code", "reg-ver": "Show details",
   "reg-error": "That code isn't right. Check your invitation and try again.",
-  "cont-h": "Questions?", "cont-antes": "Before the wedding", "cont-dia": "On the wedding day"
+  "cont-h": "For any questions", "cont-antes": "Before the wedding", "cont-dia": "On the wedding day"
 };
 
 /* ============ IDIOMA ============ */
@@ -732,6 +759,7 @@ function setLang(l) {
   document.getElementById("lang-es").outerHTML = l === "es" ? '<b id="lang-es">ES</b>' : '<span id="lang-es">ES</span>';
   document.getElementById("lang-en").outerHTML = l === "en" ? '<b id="lang-en">EN</b>' : '<span id="lang-en">EN</span>';
   if (datosAbiertos) mostrarDatos(datosAbiertos);
+  try { pintarPase(); } catch (e) {}
   try { localStorage.setItem("boda-lang", l); } catch (e) {}
 }
 document.getElementById("idioma").addEventListener("click", () => setLang(lang === "es" ? "en" : "es"));
@@ -814,7 +842,7 @@ fr.addEventListener("submit", async e => {
   e.preventDefault();
   const err = document.getElementById("r-error");
   const nombre = fr.nombre.value.trim(), asiste = fr.asiste.value, personas = fr.personas.value, cancion = fr.cancion.value.trim();
-  if (!nombre) { err.textContent = lang === "en" ? "Please write your name." : "Por favor escribe tu nombre."; err.hidden = false; fr.nombre.focus(); return; }
+  if (!nombre) { err.textContent = lang === "en" ? "Please write your name." : "Por favor, escriba su nombre."; err.hidden = false; fr.nombre.focus(); return; }
   err.hidden = true;
   const gracias = document.getElementById("r-gracias"), txt = document.getElementById("r-gracias-txt"), wa = document.getElementById("r-wa");
   if (GOOGLE_FORM.action) {
@@ -826,10 +854,10 @@ fr.addEventListener("submit", async e => {
       await fetch(GOOGLE_FORM.action, { method: "POST", mode: "no-cors", body: datos });
       fr.hidden = true; wa.hidden = true; gracias.hidden = false;
       txt.textContent = asiste === "Sí"
-        ? (lang === "en" ? `Thank you, ${nombre}! We've received your RSVP. See you on February 13.` : `¡Gracias, ${nombre}! Recibimos tu confirmación. Nos vemos el 13 de febrero.`)
-        : (lang === "en" ? `Thank you for letting us know, ${nombre}. We'll miss you!` : `Gracias por avisarnos, ${nombre}. ¡Te vamos a extrañar!`);
+        ? (lang === "en" ? `Thank you, ${nombre}! We've received your RSVP. See you on February 13.` : `Muchas gracias, ${nombre}. Hemos recibido su confirmación. Será un honor contar con su presencia el 13 de febrero.`)
+        : (lang === "en" ? `Thank you for letting us know, ${nombre}. We'll miss you!` : `Gracias por informarnos, ${nombre}. Lamentamos que no pueda acompañarnos; le tendremos presente en nuestras oraciones.`);
     } catch (x) {
-      btn.disabled = false; err.textContent = lang === "en" ? "We couldn't send it. Check your connection and try again." : "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo."; err.hidden = false;
+      btn.disabled = false; err.textContent = lang === "en" ? "We couldn't send it. Check your connection and try again." : "No se pudo enviar. Por favor, revise su conexión e intente de nuevo."; err.hidden = false;
     }
     return;
   }
@@ -842,8 +870,47 @@ fr.addEventListener("submit", async e => {
         : `Hola Miguel y Yorleyns, lamentablemente no podré asistir a su boda.\nNombre: ${nombre}`);
   wa.href = `https://wa.me/${WHATSAPP_RSVP}?text=${encodeURIComponent(msg)}`;
   wa.hidden = false; gracias.hidden = false;
-  txt.textContent = lang === "en" ? "Almost done! Tap the button to send your RSVP via WhatsApp." : "¡Casi listo! Toca el botón para enviar tu confirmación por WhatsApp.";
+  txt.textContent = lang === "en" ? "Almost done! Tap the button to send your RSVP via WhatsApp." : "Toque el botón para enviar su confirmación por WhatsApp.";
 });
+
+/* ============ PASE PERSONAL ============ */
+let invitado = null;
+async function buscarInvitado(cod) {
+  if (!/^[a-z0-9]{7}$/.test(cod) || !INVITADOS.r.length) return null;
+  const enc = new TextEncoder();
+  const base = await crypto.subtle.importKey("raw", enc.encode(cod), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", salt: b64(INVITADOS.s), iterations: 200000, hash: "SHA-256" }, base, 384));
+  const id = [...bits.slice(0, 12)].map(x => x.toString(16).padStart(2, "0")).join("");
+  const reg = INVITADOS.r.find(x => x.id === id); if (!reg) return null;
+  const key = await crypto.subtle.importKey("raw", bits.slice(16, 48), "AES-GCM", false, ["decrypt"]);
+  const plano = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(reg.i) }, key, b64(reg.c));
+  return JSON.parse(new TextDecoder().decode(plano));
+}
+function pintarPase() {
+  if (!invitado) return;
+  const en = lang === "en", n = invitado.n, pl = invitado.p;
+  document.getElementById("pase-nombre").textContent = invitado.t;
+  document.getElementById("pase-texto").textContent = en
+    ? "With God's blessing and great joy, we have the honor of inviting " + (pl ? "you all" : "you") + " to celebrate our wedding."
+    : "Con la bendición de Dios y llenos de alegría, tenemos el honor de " + (pl ? "invitarles" : "invitarle") + " a celebrar nuestro matrimonio.";
+  document.getElementById("pase-n").textContent = n;
+  document.getElementById("pase-lugares").textContent = en
+    ? (n === 1 ? "seat reserved in your honor" : "seats reserved in your honor")
+    : (n === 1 ? "lugar reservado en su honor" : "lugares reservados en su honor");
+}
+async function iniciarPase() {
+  const cod = (location.hash || "").slice(1).toLowerCase();
+  let d = null; try { d = await buscarInvitado(cod); } catch (e) {}
+  if (!d) return;
+  invitado = d;
+  pintarPase(); document.getElementById("pase").hidden = false;
+  // RSVP: nombre de la tarjeta y cupos limitados
+  const nom = document.getElementById("r-nombre"); nom.value = d.t; nom.readOnly = true; nom.classList.add("nombre-fijo");
+  const sel = document.getElementById("r-personas"); sel.innerHTML = "";
+  for (let k = 1; k <= d.n; k++) { const o = document.createElement("option"); o.textContent = k; if (k === d.n) o.selected = true; sel.appendChild(o); }
+  // Regalos: se abren solos con el código incluido en la tarjeta
+  if (d.g) { try { const g = await descifrar(d.g); document.getElementById("bloqueado").hidden = true; mostrarDatos(g); document.getElementById("datos").hidden = false; } catch (e) {} }
+}
 
 /* ============ REGALOS (datos cifrados con el código de la invitación) ============ */
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -1003,6 +1070,7 @@ function pararMusica() {
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && sonando) document.getElementById("musica").click();
 });
+iniciarPase();
 document.getElementById("musica").addEventListener("click", e => {
   sonando = !sonando; e.currentTarget.setAttribute("aria-pressed", sonando);
   document.getElementById("musica-ico").setAttribute("d", sonando ? "M7 5h4v14H7zM13 5h4v14h-4z" : "M8 5v14l11-7z");
