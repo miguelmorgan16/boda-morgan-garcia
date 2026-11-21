@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colonial · Proveedores</title>
+<meta name="description" content="Catálogo de productos y servicios de Colonial Enterprises. Elija lo que su empresa necesita y solicite una cotización.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<style>
+/* ---------- Tokens (Libro de marca Colonial 2026) ---------- */
+:root{
+  --navy:#222C49; --petrol:#1F656F; --aqua:#46999F; --orange:#F18330;
+  --bg:#E0F1F3; --surface:#FFFFFF; --text:#222C49; --muted:#1F656F;
+  --line:#46999F; --line-soft:#BFDDE1; --on-dark:#FFFFFF;
+  --btn-bg:#222C49; --btn-text:#FFFFFF; --btn2-bg:#1F656F;
+  --field-bg:#FFFFFF; --field-border:#9CC9CE;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px; --s12:48px; --s16:64px;
+  --radius-control:4px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161D31; --surface:#222C49; --text:#E8F3F4; --muted:#8FC6CB;
+    --line:#46999F; --line-soft:#33405F; --btn-bg:#46999F; --btn-text:#0F1526; --btn2-bg:#1F656F;
+    --field-bg:#1A2239; --field-border:#3C4A6B; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161D31; --surface:#222C49; --text:#E8F3F4; --muted:#8FC6CB;
+  --line:#46999F; --line-soft:#33405F; --btn-bg:#46999F; --btn-text:#0F1526; --btn2-bg:#1F656F;
+  --field-bg:#1A2239; --field-border:#3C4A6B; color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,sans-serif;font-weight:400;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:700;line-height:1.15;margin:0}
+p{margin:0}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--aqua);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--s12)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);border:0;border-radius:var(--radius-control);padding:var(--s3) var(--s6);font-weight:700;font-size:15px;cursor:pointer;background:var(--btn-bg);color:var(--btn-text);text-decoration:none;min-height:44px}
+.btn:hover{filter:brightness(1.12)}
+.btn.secondary{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.added{background:var(--btn2-bg);color:#fff}
+.btn.block{width:100%}
+
+/* ---------- Header ---------- */
+header.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line-soft)}
+.top .wrap{display:flex;align-items:center;gap:var(--s6);height:72px}
+.brand{display:flex;align-items:center;gap:var(--s3);text-decoration:none}
+.brand img{display:block;height:26px;width:auto}
+.guarantee .logo{display:block;width:150px;height:auto;margin-bottom:var(--s8)}
+.more{display:flex;justify-content:center;margin-top:var(--s8)}
+.result-count{font-size:14px;color:var(--muted);margin:calc(-1 * var(--s2)) 0 var(--s4)}
+nav.main{display:flex;gap:var(--s6);margin-left:auto}
+nav.main a{text-decoration:none;font-size:15px}
+nav.main a:hover{color:var(--muted)}
+.lang{display:flex;border:1px solid var(--line);border-radius:var(--radius-control);overflow:hidden}
+.lang button{border:0;background:transparent;padding:var(--s1) var(--s3);font-size:13px;font-weight:700;cursor:pointer;min-height:32px}
+.lang button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-text)}
+.cart-btn{position:relative}
+.badge{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--orange);color:#222C49;font-size:12px;font-weight:700}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;padding:var(--s16) 0 var(--s16)}
+.hero .accent{position:absolute;right:0;top:0;width:min(34vw,420px);height:min(34vw,420px);background:var(--aqua);border-bottom-left-radius:100%;pointer-events:none}
+.hero .inner{position:relative;max-width:640px}
+.hero h1{font-size:clamp(34px,5vw,54px);margin:var(--s4) 0 var(--s6)}
+.hero p.lead{font-size:18px;max-width:560px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s8)}
+.uniques{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s6);margin-top:var(--s12);padding-top:var(--s6);border-top:1px solid var(--line)}
+.uniques div strong{display:block;font-size:15px}
+.uniques div span{font-size:14px;color:var(--muted)}
+
+/* ---------- Catalog ---------- */
+section.block{padding:var(--s16) 0;border-top:1px solid var(--line-soft)}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s6);flex-wrap:wrap;margin-bottom:var(--s8)}
+.section-head h2{font-size:clamp(26px,3.4vw,36px);margin-top:var(--s2)}
+.sample-note{font-size:13px;color:var(--muted);border-left:2px solid var(--aqua);padding-left:var(--s3);max-width:360px}
+.toolbar{display:flex;gap:var(--s4);flex-wrap:wrap;align-items:center;margin-bottom:var(--s6)}
+.search{flex:1 1 280px;position:relative}
+.search input{width:100%;min-height:48px;padding:var(--s3) var(--s4) var(--s3) 44px;border:1px solid var(--field-border);background:var(--field-bg);border-radius:var(--radius-control)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--muted)}
+.tabs{display:flex;gap:var(--s2);flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:transparent;border-radius:var(--radius-control);padding:var(--s2) var(--s4);font-size:14px;cursor:pointer;min-height:44px}
+.tab[aria-selected="true"]{background:var(--btn-bg);color:var(--btn-text);border-color:var(--btn-bg);font-weight:700}
+.tab .n{opacity:.7;margin-left:6px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:var(--s6)}
+.card{background:var(--surface);border-top:2px solid var(--aqua);padding:var(--s6);display:flex;flex-direction:column;gap:var(--s3)}
+.card .cat{display:flex;align-items:center;gap:var(--s2)}
+.card .cat svg{width:18px;height:18px;stroke:var(--muted)}
+.card h3{font-size:18px}
+.card p.desc{font-size:14px;flex:1}
+.card .price{font-size:14px;padding-top:var(--s3);border-top:1px solid var(--line-soft)}
+.card .price strong{font-size:20px}
+.card .price span{color:var(--muted)}
+.empty{padding:var(--s12) 0;text-align:center;color:var(--muted)}
+
+/* ---------- Process ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s6)}
+.step{border-top:1px solid var(--line);padding-top:var(--s4)}
+.step .num{font-size:36px;font-weight:700;color:var(--aqua);line-height:1}
+.step h3{font-size:17px;margin:var(--s3) 0 var(--s2)}
+.step p{font-size:14px}
+
+/* ---------- Guarantee / footer ---------- */
+.guarantee{background:#222C49;color:#fff;padding:var(--s16) 0}
+.guarantee .grid2{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--s12);align-items:start}
+.guarantee .eyebrow{color:#8FC6CB}
+.guarantee h2{font-size:clamp(28px,4vw,44px);margin-top:var(--s3)}
+.guarantee p{font-size:16px;color:#E0F1F3}
+.guarantee .contact{margin-top:var(--s6);padding-top:var(--s6);border-top:1px solid #46999F;font-size:14px}
+footer{background:#222C49;color:#E0F1F3;font-size:13px;padding:var(--s6) 0 var(--s8);border-top:1px solid #33405F}
+footer .wrap{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap}
+
+/* ---------- Quote drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(15,21,38,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.scrim.open{opacity:1;pointer-events:auto}
+aside.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--surface);z-index:50;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+aside.drawer.open{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:var(--s6);border-bottom:1px solid var(--line-soft)}
+.drawer-head h2{font-size:22px}
+.icon-btn{border:0;background:transparent;width:44px;height:44px;cursor:pointer;display:grid;place-items:center;border-radius:var(--radius-control)}
+.icon-btn svg{width:22px;height:22px;stroke:var(--text)}
+.drawer-body{overflow:auto;padding:var(--s6);flex:1}
+.items{list-style:none;margin:0 0 var(--s8);padding:0}
+.items li{display:grid;grid-template-columns:1fr auto auto;gap:var(--s3);align-items:center;padding:var(--s3) 0;border-bottom:1px solid var(--line-soft)}
+.items li strong{display:block;font-size:14px;line-height:1.3}
+.items li span{font-size:12px;color:var(--muted)}
+.qty{width:72px;min-height:40px;padding:var(--s2);border:1px solid var(--field-border);background:var(--field-bg);border-radius:var(--radius-control);text-align:center}
+.remove{border:0;background:transparent;color:var(--muted);text-decoration:underline;font-size:13px;cursor:pointer;min-height:40px}
+.estimate{display:flex;justify-content:space-between;font-size:14px;margin:calc(-1 * var(--s4)) 0 var(--s8)}
+.estimate strong{font-size:16px}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--s4)}
+.field label{font-size:13px;font-weight:700}
+.field input,.field select,.field textarea{min-height:44px;padding:var(--s2) var(--s3);border:1px solid var(--field-border);background:var(--field-bg);border-radius:var(--radius-control);width:100%}
+.field textarea{min-height:88px;resize:vertical}
+.form-title{font-size:16px;margin-bottom:var(--s4)}
+.fineprint{font-size:12px;color:var(--muted);margin-top:var(--s3)}
+.done{text-align:center;padding:var(--s12) var(--s4)}
+.done svg{width:64px;height:64px;margin-bottom:var(--s4)}
+.done h3{font-size:22px;margin-bottom:var(--s3)}
+.empty-cart{color:var(--muted);font-size:14px;padding:var(--s4) 0 var(--s8)}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .steps{grid-template-columns:1fr 1fr}
+  .guarantee .grid2{grid-template-columns:1fr;gap:var(--s6)}
+  nav.main{display:none}
+  .lang{margin-left:auto}
+}
+@media (max-width:600px){
+  .wrap{padding:0 var(--s4)}
+  .top .wrap{gap:var(--s3);height:64px}
+  .brand img{height:22px}
+  .cart-btn .label{display:none}
+  .cart-btn{padding:var(--s2) var(--s3)}
+  .hero{padding:var(--s12) 0}
+  .hero .accent{width:28vw;height:28vw}
+  .hero{padding-top:calc(28vw + var(--s4))}
+  .steps{grid-template-columns:1fr}
+  form .row{grid-template-columns:1fr;gap:0}
+  .uniques{grid-template-columns:1fr;gap:var(--s3)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">
+      <picture>
+        <source srcset="assets/wordmark-white.png" media="(prefers-color-scheme: dark)">
+        <img src="assets/wordmark-navy.png" alt="Colonial" width="850" height="169">
+      </picture>
+    </a>
+    <nav class="main">
+      <a href="#catalogo" data-i18n="nav.catalog">Catálogo</a>
+      <a href="#proceso" data-i18n="nav.process">Cómo funciona</a>
+      <a href="#contacto" data-i18n="nav.contact">Contacto</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button class="btn cart-btn" type="button" id="openCart">
+      <span class="label" data-i18n="cart.button">Mi cotización</span>
+      <span class="badge" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="accent" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="inner">
+        <span class="eyebrow" data-i18n="hero.eyebrow">Portal de proveedores para nuestros clientes</span>
+        <h1 data-i18n="hero.title">Lo que su empresa necesita, en una sola solicitud.</h1>
+        <p class="lead" data-i18n="hero.lead">Elija productos y servicios de proveedores verificados por Colonial. Nosotros coordinamos la cotización y le respondemos en menos de 12 horas hábiles.</p>
+        <div class="actions">
+          <a class="btn" href="#catalogo" data-i18n="hero.cta">Ver catálogo</a>
+          <a class="btn secondary" href="#proceso" data-i18n="hero.cta2">Cómo funciona</a>
+        </div>
+        <div class="uniques">
+          <div><strong data-i18n="u1.t">Disposición</strong><span data-i18n="u1.d">Un solo contacto para todos sus proveedores</span></div>
+          <div><strong data-i18n="u2.t">Tiempo de respuesta</strong><span data-i18n="u2.d">Menos de 12 horas hábiles</span></div>
+          <div><strong data-i18n="u3.t">Precio</strong><span data-i18n="u3.d">Precios de referencia visibles desde el inicio</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="catalogo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="cat.eyebrow">Catálogo</span>
+          <h2 data-i18n="cat.title">Elija lo que necesita cotizar</h2>
+        </div>
+        <p class="sample-note" data-i18n="cat.sample">Precios de referencia en US$, sin impuestos. El precio final se confirma en su cotización. ¿No encuentra lo que busca? Descríbalo en los comentarios de su solicitud.</p>
+      </div>
+      <div class="toolbar">
+        <label class="search">
+          <span class="sr-only" data-i18n="cat.searchLabel">Buscar</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input type="search" id="search" autocomplete="off">
+        </label>
+        <div class="tabs" role="tablist" id="tabs"></div>
+      </div>
+      <p class="result-count" id="resultCount" aria-live="polite"></p>
+      <div class="grid" id="grid"></div>
+      <div class="more" id="moreWrap" hidden><button class="btn secondary" type="button" id="moreBtn"></button></div>
+      <p class="empty" id="empty" hidden data-i18n="cat.empty">No encontramos resultados. Pruebe con otra palabra o escríbanos en el formulario de cotización.</p>
+    </div>
+  </section>
+
+  <section class="block" id="proceso">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="proc.eyebrow">Nuestro proceso</span>
+          <h2 data-i18n="proc.title">De la necesidad a la solución, en cuatro pasos</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="num">01</div><h3 data-i18n="p1.t">La entrevista</h3><p data-i18n="p1.d">Usted elige productos y servicios del catálogo y nos cuenta qué necesita y para cuándo.</p></div>
+        <div class="step"><div class="num">02</div><h3 data-i18n="p2.t">La evaluación</h3><p data-i18n="p2.d">Revisamos su solicitud con los proveedores más adecuados para su empresa.</p></div>
+        <div class="step"><div class="num">03</div><h3 data-i18n="p3.t">La fórmula</h3><p data-i18n="p3.d">Le enviamos una cotización consolidada en menos de 12 horas hábiles.</p></div>
+        <div class="step"><div class="num">04</div><h3 data-i18n="p4.t">El resultado</h3><p data-i18n="p4.d">Coordinamos la entrega o el servicio y damos mantenimiento y soporte continuos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guarantee" id="contacto">
+    <div class="wrap grid2">
+      <div>
+        <img class="logo" src="assets/logo-white.png" alt="Colonial" width="850" height="651">
+        <span class="eyebrow" data-i18n="g.eyebrow">Nuestra garantía</span>
+        <h2 data-i18n="g.title">Simple y flexible es posible.</h2>
+      </div>
+      <div>
+        <p data-i18n="g.text">Cumplimos la fecha de entrega con productos y servicios completos y en perfecto estado. Respondemos toda consulta en menos de 12 horas hábiles. Si no se cumple, corregimos la situación y le damos un 30% de descuento en su próxima compra.</p>
+        <div class="contact">
+          Colonial Enterprises, S.A.<br>
+          BICSA Financial Center, piso 52, oficina 52-11 · Avenida Balboa, Ciudad de Panamá
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Colonial Enterprises, S.A.</span>
+    <span data-i18n="footer.tag">Transformamos necesidades empresariales en soluciones.</span>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="drawerTitle" role="dialog">
+  <div class="drawer-head">
+    <h2 id="drawerTitle" data-i18n="cart.title">Su solicitud de cotización</h2>
+    <button class="icon-btn" type="button" id="closeCart" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="drawerBody">
+    <div id="cartView">
+      <ul class="items" id="items"></ul>
+      <p class="empty-cart" id="emptyCart" data-i18n="cart.empty">Aún no ha agregado productos o servicios. Puede enviar la solicitud de todas formas y describir lo que necesita en comentarios.</p>
+      <div class="estimate" id="estimate" hidden><span data-i18n="cart.estimate">Estimado de referencia</span><strong id="estimateValue"></strong></div>
+
+      <form id="quoteForm" novalidate>
+        <h3 class="form-title" data-i18n="form.title">Sus datos</h3>
+        <div class="row">
+          <div class="field"><label for="f-name" data-i18n="form.name">Nombre completo</label><input id="f-name" name="nombre" required autocomplete="name"></div>
+          <div class="field"><label for="f-role" data-i18n="form.role">Cargo</label><input id="f-role" name="cargo" required autocomplete="organization-title"></div>
+        </div>
+        <div class="field"><label for="f-company" data-i18n="form.company">Empresa</label><input id="f-company" name="empresa" required autocomplete="organization"></div>
+        <div class="row">
+          <div class="field"><label for="f-email" data-i18n="form.email">Correo</label><input id="f-email" name="correo" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="f-phone" data-i18n="form.phone">Teléfono</label><input id="f-phone" name="telefono" type="tel" required autocomplete="tel"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="f-date" data-i18n="form.date">Fecha requerida</label><input id="f-date" name="fecha_requerida" type="date" required></div>
+          <div class="field"><label for="f-budget" data-i18n="form.budget">Presupuesto estimado</label>
+            <select id="f-budget" name="presupuesto" required>
+              <option value="" data-i18n="form.budget0">Seleccione</option>
+              <option>&lt; US$ 1,000</option>
+              <option>US$ 1,000 – 5,000</option>
+              <option>US$ 5,000 – 20,000</option>
+              <option>US$ 20,000 – 50,000</option>
+              <option>&gt; US$ 50,000</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="f-notes" data-i18n="form.notes">Comentarios (opcional)</label><textarea id="f-notes" name="comentarios"></textarea></div>
+        <button class="btn block" type="submit" data-i18n="form.submit">Enviar solicitud de cotización</button>
+        <p class="fineprint" id="formError" hidden data-i18n="form.error">Complete los campos marcados para continuar.</p>
+        <p class="fineprint" data-i18n="form.fine">Le respondemos en menos de 12 horas hábiles.</p>
+      </form>
+    </div>
+    <div class="done" id="doneView" hidden>
+      <svg viewBox="-80 -80 160 160" aria-hidden="true"><circle r="72" fill="none" stroke="#46999F" stroke-width="4"/><path d="M-30 2l20 20 40-42" fill="none" stroke="#1F656F" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3 data-i18n="done.title">Recibimos su solicitud</h3>
+      <p data-i18n="done.text">Le enviaremos su cotización en menos de 12 horas hábiles.</p>
+      <p style="margin-top:24px"><button class="btn secondary" type="button" id="newQuote" data-i18n="done.again">Nueva solicitud</button></p>
+    </div>
+  </div>
+</aside>
+
+<script src="catalog.js"></script>
+<script>
+/* =====================================================================
+   CONFIGURACIÓN
+   formEndpoint: dirección de Formspree (u otro servicio). Mientras esté
+   vacía, el botón abre el correo del usuario con la solicitud lista.
+   ===================================================================== */
+const CONFIG = {
+  formEndpoint: "https://formspree.io/f/mbgozrgl",
+  fallbackEmail: "m.morgan@colonialenterprise.com",
+  currency: "USD",
+  pageSize: 24
+};
+
+/* =====================================================================
+   CATÁLOGO — las filas viven en catalog.js (generado desde QuickBooks).
+   ===================================================================== */
+const CATEGORIES = {
+  ti:          { es: "Tecnología / TI",     en: "Technology / IT" },
+  generales:   { es: "Servicios generales", en: "General services" },
+  suministros: { es: "Suministros",         en: "Supplies" }
+};
+const UNITS = {
+  u:["por unidad","per unit"], s:["por servicio","per service"], k:["por kit","per kit"],
+  p:["por paquete","per pack"], y:["por sistema","per system"]
+};
+const CATALOG = (window.CATALOG_ROWS || []).map(([id,cat,price,unit,esName,esDesc,enName,enDesc]) => ({
+  id:"qb-"+id, cat, price,
+  es:{ name:esName, desc:esDesc, unit:(UNITS[unit]||UNITS.u)[0] },
+  en:{ name:enName, desc:enDesc, unit:(UNITS[unit]||UNITS.u)[1] }
+}));
+
+/* =====================================================================
+   TEXTOS DE LA INTERFAZ
+   ===================================================================== */
+const I18N = {
+  es:{},
+  en:{
+    "nav.catalog":"Catalog","nav.process":"How it works","nav.contact":"Contact",
+    "cart.button":"My quote",
+    "hero.eyebrow":"Supplier portal for our clients",
+    "hero.title":"What your company needs, in a single request.",
+    "hero.lead":"Choose products and services from suppliers vetted by Colonial. We coordinate the quote and reply in under 12 business hours.",
+    "hero.cta":"View catalog","hero.cta2":"How it works",
+    "u1.t":"Availability","u1.d":"One contact for all your suppliers",
+    "u2.t":"Response time","u2.d":"Under 12 business hours",
+    "u3.t":"Price","u3.d":"Reference prices visible from the start",
+    "cat.eyebrow":"Catalog","cat.title":"Choose what you need quoted",
+    "cat.sample":"Reference prices in US$, before tax. The final price is confirmed in your quote. Can't find what you need? Describe it in the comments of your request.",
+    "cat.searchLabel":"Search",
+    "cat.empty":"No results found. Try another word or describe your need in the quote form.",
+    "proc.eyebrow":"Our process","proc.title":"From need to solution, in four steps",
+    "p1.t":"The interview","p1.d":"You choose products and services from the catalog and tell us what you need and when.",
+    "p2.t":"The evaluation","p2.d":"We review your request with the suppliers best suited to your company.",
+    "p3.t":"The formula","p3.d":"We send you a consolidated quote in under 12 business hours.",
+    "p4.t":"The result","p4.d":"We coordinate delivery or service and provide ongoing maintenance and support.",
+    "g.eyebrow":"Our guarantee","g.title":"Simple and flexible is possible.",
+    "g.text":"We meet the delivery date with complete products and services in perfect condition. We answer every inquiry in under 12 business hours. If we fall short, we fix it and give you 30% off your next purchase.",
+    "footer.tag":"We turn business needs into solutions.",
+    "cart.title":"Your quote request",
+    "cart.empty":"You have not added any products or services yet. You can still send the request and describe what you need in the comments.",
+    "cart.estimate":"Reference estimate",
+    "form.title":"Your details","form.name":"Full name","form.role":"Job title","form.company":"Company",
+    "form.email":"Email","form.phone":"Phone","form.date":"Date needed","form.budget":"Estimated budget",
+    "form.budget0":"Select","form.notes":"Comments (optional)","form.submit":"Send quote request",
+    "form.error":"Complete the highlighted fields to continue.","form.fine":"We reply in under 12 business hours.",
+    "done.title":"We received your request","done.text":"We will send your quote in under 12 business hours.","done.again":"New request"
+  }
+};
+const UI = {
+  es:{ all:"Todos", add:"Agregar a cotización", added:"En su cotización", from:"Desde", remove:"Quitar", qty:"Cantidad", search:"Buscar producto o servicio", close:"Cerrar", more:"Ver más", count:(n,t)=>`Mostrando ${n} de ${t}` },
+  en:{ all:"All", add:"Add to quote", added:"In your quote", from:"From", remove:"Remove", qty:"Quantity", search:"Search products or services", close:"Close", more:"Show more", count:(n,t)=>`Showing ${n} of ${t}` }
+};
+const ICONS = {
+  ti:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="11"/><path d="M8 20h8M12 16v4"/></svg>',
+  generales:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>',
+  suministros:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8-4 8 4v8l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v8"/></svg>'
+};
+
+/* =====================================================================
+   Estado
+   ===================================================================== */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+let lang = store.get("colonial.lang", "es");
+let cart = store.get("colonial.cart", {});   // { id: qty }
+let activeCat = "all";
+let query = "";
+let shown = CONFIG.pageSize;
+
+const $ = s => document.querySelector(s);
+const money = n => new Intl.NumberFormat(lang === "es" ? "es-PA" : "en-US", { style:"currency", currency:CONFIG.currency, minimumFractionDigits: n % 1 ? 2 : 0 }).format(n);
+const byId = id => CATALOG.find(p => p.id === id);
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+/* ---------- Idioma ---------- */
+const ES_DEFAULTS = {};
+document.querySelectorAll("[data-i18n]").forEach(el => ES_DEFAULTS[el.dataset.i18n] = el.textContent);
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.dataset.i18n;
+    el.textContent = (lang === "en" && I18N.en[k]) ? I18N.en[k] : ES_DEFAULTS[k];
+  });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  $("#search").placeholder = UI[lang].search;
+  $("#closeCart").setAttribute("aria-label", UI[lang].close);
+  renderTabs(); renderGrid(); renderCart();
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.lang; store.set("colonial.lang", lang); applyLang(); }));
+
+/* ---------- Catálogo ---------- */
+function visible(){
+  const q = norm(query.trim());
+  return CATALOG.filter(p => (activeCat === "all" || p.cat === activeCat) &&
+    (!q || norm(p.es.name + " " + p.es.desc + " " + p.en.name + " " + p.en.desc + " " + CATEGORIES[p.cat].es + " " + CATEGORIES[p.cat].en).includes(q)));
+}
+function renderTabs(){
+  const tabs = [["all", UI[lang].all, CATALOG.length], ...Object.entries(CATEGORIES).map(([k,v]) => [k, v[lang], CATALOG.filter(p => p.cat === k).length])];
+  $("#tabs").innerHTML = tabs.map(([k,label,n]) =>
+    `<button class="tab" role="tab" type="button" data-cat="${k}" aria-selected="${k===activeCat}">${label}<span class="n">${n}</span></button>`).join("");
+  $("#tabs").querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => { activeCat = t.dataset.cat; shown = CONFIG.pageSize; renderTabs(); renderGrid(); }));
+}
+function renderGrid(){
+  const all = visible();
+  const list = all.slice(0, shown);
+  $("#empty").hidden = all.length > 0;
+  $("#resultCount").textContent = all.length ? UI[lang].count(list.length, all.length) : "";
+  $("#moreWrap").hidden = all.length <= shown;
+  $("#moreBtn").textContent = UI[lang].more;
+  $("#grid").innerHTML = list.map(p => {
+    const t = p[lang], inCart = cart[p.id];
+    return `<article class="card">
+      <div class="cat">${ICONS[p.cat]}<span class="eyebrow">${CATEGORIES[p.cat][lang]}</span></div>
+      <h3>${t.name}</h3>
+      <p class="desc">${t.desc}</p>
+      <div class="price"><span>${UI[lang].from}</span> <strong>${money(p.price)}</strong> <span>${t.unit}</span></div>
+      <button class="btn ${inCart ? "added" : ""}" type="button" data-add="${p.id}" aria-pressed="${!!inCart}">${inCart ? UI[lang].added : UI[lang].add}</button>
+    </article>`;
+  }).join("");
+  $("#grid").querySelectorAll("[data-add]").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.add;
+    if (cart[id]) delete cart[id]; else cart[id] = 1;
+    saveCart(); renderGrid();
+  }));
+}
+$("#search").addEventListener("input", e => { query = e.target.value; shown = CONFIG.pageSize; renderGrid(); });
+$("#moreBtn").addEventListener("click", () => { shown += CONFIG.pageSize; renderGrid(); });
+
+/* ---------- Cotización ---------- */
+function saveCart(){ store.set("colonial.cart", cart); renderCart(); }
+function renderCart(){
+  const ids = Object.keys(cart).filter(byId);
+  const count = ids.length;
+  $("#cartCount").textContent = count;
+  $("#emptyCart").hidden = count > 0;
+  $("#items").innerHTML = ids.map(id => {
+    const p = byId(id), t = p[lang];
+    return `<li>
+      <div><strong>${t.name}</strong><span>${UI[lang].from} ${money(p.price)} ${t.unit}</span></div>
+      <input class="qty" type="number" min="1" value="${cart[id]}" data-qty="${id}" aria-label="${UI[lang].qty}: ${t.name}">
+      <button class="remove" type="button" data-remove="${id}">${UI[lang].remove}</button>
+    </li>`;
+  }).join("");
+  const total = ids.reduce((s,id) => s + byId(id).price * cart[id], 0);
+  $("#estimate").hidden = count === 0;
+  $("#estimateValue").textContent = money(total);
+  $("#items").querySelectorAll("[data-qty]").forEach(i => i.addEventListener("change", () => {
+    cart[i.dataset.qty] = Math.max(1, parseInt(i.value,10) || 1); saveCart();
+  }));
+  $("#items").querySelectorAll("[data-remove]").forEach(b => b.addEventListener("click", () => {
+    delete cart[b.dataset.remove]; saveCart(); renderGrid();
+  }));
+}
+function openCart(){ $("#drawer").classList.add("open"); $("#scrim").classList.add("open"); $("#drawer").setAttribute("aria-hidden","false"); $("#closeCart").focus(); }
+function closeCart(){ $("#drawer").classList.remove("open"); $("#scrim").classList.remove("open"); $("#drawer").setAttribute("aria-hidden","true"); $("#openCart").focus(); }
+$("#openCart").addEventListener("click", openCart);
+$("#closeCart").addEventListener("click", closeCart);
+$("#scrim").addEventListener("click", closeCart);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#drawer").classList.contains("open")) closeCart(); });
+
+/* ---------- Envío ---------- */
+$("#quoteForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target;
+  let ok = true;
+  form.querySelectorAll("[required]").forEach(f => {
+    const bad = !f.value.trim() || (f.type === "email" && !/^\S+@\S+\.\S+$/.test(f.value));
+    f.style.borderColor = bad ? "#F18330" : "";
+    if (bad) ok = false;
+  });
+  $("#formError").hidden = ok;
+  if (!ok) return;
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  const lines = Object.keys(cart).filter(byId).map(id => {
+    const p = byId(id);
+    return `- ${p.es.name} · cantidad: ${cart[id]} · desde ${money(p.price)} ${p.es.unit}`;
+  });
+  const summary =
+`Solicitud de cotización · Portal Colonial
+
+Nombre: ${data.nombre}
+Cargo: ${data.cargo}
+Empresa: ${data.empresa}
+Correo: ${data.correo}
+Teléfono: ${data.telefono}
+Fecha requerida: ${data.fecha_requerida}
+Presupuesto estimado: ${data.presupuesto}
+
+Productos y servicios:
+${lines.length ? lines.join("\n") : "- (sin selección; ver comentarios)"}
+
+Comentarios:
+${data.comentarios || "-"}
+
+Idioma del cliente: ${lang.toUpperCase()}`;
+
+  if (CONFIG.formEndpoint) {
+    try {
+      const r = await fetch(CONFIG.formEndpoint, {
+        method:"POST", headers:{ "Accept":"application/json", "Content-Type":"application/json" },
+        body: JSON.stringify({ ...data, email: data.correo, productos: lines.join("\n"), _subject:`Cotización: ${data.empresa}`, resumen: summary })
+      });
+      if (!r.ok) throw new Error();
+    } catch(err) {
+      alert(lang === "es" ? "No pudimos enviar la solicitud. Intente de nuevo en unos minutos." : "We could not send your request. Please try again in a few minutes.");
+      return;
+    }
+  } else {
+    window.location.href = `mailto:${CONFIG.fallbackEmail}?subject=${encodeURIComponent("Cotización: " + data.empresa)}&body=${encodeURIComponent(summary)}`;
+  }
+  cart = {}; saveCart(); renderGrid(); form.reset();
+  $("#cartView").hidden = true; $("#doneView").hidden = false;
+});
+$("#newQuote").addEventListener("click", () => { $("#cartView").hidden = false; $("#doneView").hidden = true; });
+
+/* ---------- Inicio ---------- */
+$("#year").textContent = new Date().getFullYear();
+const tomorrow = new Date(Date.now() + 864e5).toISOString().slice(0,10);
+$("#f-date").min = tomorrow;
+applyLang();
+</script>
+</body>
+</html>
