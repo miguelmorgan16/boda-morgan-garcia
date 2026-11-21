@@ -451,7 +451,8 @@ form .row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
         </div>
         <div class="row">
           <div class="field"><label for="f-date" data-i18n="form.date">Fecha deseada de entrega</label><input id="f-date" name="fecha_entrega" type="date" required></div>
-          <div class="field"><label for="f-place" data-i18n="form.place">Lugar de entrega</label><input id="f-place" name="lugar_entrega" required></div>
+          <div class="field"><label for="f-place" data-i18n="form.place">Lugar de entrega</label><input id="f-place" name="lugar_entrega" required list="places" value="Oficinas Tocumen Aeropuerto"></div>
+          <datalist id="places"><option value="Oficinas Tocumen Aeropuerto"></datalist>
         </div>
         <div class="row">
           <div class="field"><label for="f-cc"><span data-i18n="form.cc">Centro de costo</span> <span class="opt" data-i18n="form.optional">(opcional)</span></label><input id="f-cc" name="centro_costo"></div>
