@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Colonial · Compras DHL</title>
+<meta name="description" content="Portal privado de compras de Colonial para DHL Aero Expreso.">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- Tokens (Libro de marca Colonial 2026) ---------- */
+:root{
+  --navy:#222C49; --petrol:#1F656F; --aqua:#46999F; --orange:#F18330;
+  --bg:#E0F1F3; --surface:#FFFFFF; --text:#222C49; --muted:#1F656F;
+  --line:#46999F; --line-soft:#BFDDE1; --tile:#F2F9FA;
+  --btn-bg:#222C49; --btn-text:#FFFFFF; --btn2-bg:#1F656F;
+  --field-bg:#FFFFFF; --field-border:#9CC9CE; --danger:#B3261E;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s6:24px; --s8:32px; --s12:48px; --s16:64px;
+  --radius-control:4px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161D31; --surface:#222C49; --text:#E8F3F4; --muted:#8FC6CB; --tile:#1C2540;
+    --line:#46999F; --line-soft:#33405F; --btn-bg:#46999F; --btn-text:#0F1526; --btn2-bg:#1F656F;
+    --field-bg:#1A2239; --field-border:#3C4A6B; --danger:#F2B8B5; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161D31; --surface:#222C49; --text:#E8F3F4; --muted:#8FC6CB; --tile:#1C2540;
+  --line:#46999F; --line-soft:#33405F; --btn-bg:#46999F; --btn-text:#0F1526; --btn2-bg:#1F656F;
+  --field-bg:#1A2239; --field-border:#3C4A6B; --danger:#F2B8B5; color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,sans-serif;font-weight:400;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:700;line-height:1.15;margin:0}
+p{margin:0}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--aqua);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--s12)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);border:0;border-radius:var(--radius-control);padding:var(--s3) var(--s6);font-weight:700;font-size:15px;cursor:pointer;background:var(--btn-bg);color:var(--btn-text);text-decoration:none;min-height:44px}
+.btn:hover{filter:brightness(1.12)}
+.btn.secondary{background:transparent;color:var(--text);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.small{min-height:40px;padding:var(--s2) var(--s4);font-size:14px}
+.btn.block{width:100%}
+.linkbtn{border:0;background:transparent;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0;font-size:14px;min-height:32px}
+
+/* ---------- Gate ---------- */
+.gate{min-height:100vh;display:grid;place-items:center;padding:var(--s6) var(--s4);position:relative;overflow:hidden}
+.gate .accent{position:absolute;left:0;bottom:0;width:min(40vw,420px);height:min(40vw,420px);background:var(--aqua);border-top-right-radius:100%}
+.gate-box{position:relative;background:var(--surface);width:min(440px,100%);padding:var(--s12) var(--s8);border-top:2px solid var(--aqua)}
+.gate-box img{display:block;width:120px;height:auto;margin-bottom:var(--s8)}
+.gate-box h1{font-size:26px;margin:var(--s2) 0 var(--s3)}
+.gate-box p{font-size:15px;margin-bottom:var(--s6)}
+.gate-box .remember{display:flex;gap:var(--s2);align-items:center;font-size:14px;margin:var(--s3) 0 var(--s6)}
+.gate-box .remember input{width:18px;height:18px;accent-color:var(--petrol)}
+.gate-error{color:var(--danger);font-size:14px;margin-top:var(--s3)}
+.gate-help{font-size:13px;color:var(--muted);margin-top:var(--s6)}
+
+/* ---------- Header ---------- */
+header.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line-soft)}
+.top .wrap{display:flex;align-items:center;gap:var(--s6);height:72px}
+.brand{display:flex;align-items:baseline;gap:var(--s3);text-decoration:none}
+.brand img{display:block;height:26px;width:auto;align-self:center}
+.brand .for{font-size:13px;color:var(--muted);white-space:nowrap}
+nav.main{display:flex;gap:var(--s6);margin-left:auto}
+nav.main a{text-decoration:none;font-size:15px}
+nav.main a:hover{color:var(--muted)}
+.lang{display:flex;border:1px solid var(--line);border-radius:var(--radius-control);overflow:hidden}
+.lang button{border:0;background:transparent;padding:var(--s1) var(--s3);font-size:13px;font-weight:700;cursor:pointer;min-height:32px}
+.lang button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-text)}
+.badge{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--orange);color:#222C49;font-size:12px;font-weight:700}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;padding:var(--s16) 0}
+.hero .accent{position:absolute;right:0;top:0;width:min(30vw,380px);height:min(30vw,380px);background:var(--aqua);border-bottom-left-radius:100%;pointer-events:none}
+.hero .inner{position:relative;max-width:680px}
+.hero h1{font-size:clamp(32px,4.6vw,52px);margin:var(--s4) 0 var(--s6)}
+.hero p.lead{font-size:18px;max-width:600px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:var(--s3);margin-top:var(--s8)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s6);margin-top:var(--s12);padding-top:var(--s6);border-top:1px solid var(--line)}
+.facts strong{display:block;font-size:15px}
+.facts span{font-size:14px;color:var(--muted)}
+
+/* ---------- Sections ---------- */
+section.block{padding:var(--s16) 0;border-top:1px solid var(--line-soft);scroll-margin-top:72px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s6);flex-wrap:wrap;margin-bottom:var(--s8)}
+.section-head h2{font-size:clamp(26px,3.4vw,36px);margin-top:var(--s2)}
+.note{font-size:13px;color:var(--muted);border-left:2px solid var(--aqua);padding-left:var(--s3);max-width:380px}
+
+/* ---------- Popular ---------- */
+.popular{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+.pop{background:var(--surface);display:grid;grid-template-columns:72px 1fr;gap:var(--s3);align-items:center;padding:var(--s3);border-top:2px solid var(--aqua)}
+.pop .thumb{width:72px;height:72px}
+.pop strong{display:block;font-size:14px;line-height:1.3}
+.pop .p{font-size:13px;color:var(--muted)}
+.pop .row{grid-column:1 / -1}
+
+/* ---------- Catalog ---------- */
+.toolbar{display:flex;gap:var(--s4);flex-wrap:wrap;align-items:center;margin-bottom:var(--s6)}
+.search{flex:1 1 280px;position:relative}
+.search input{width:100%;min-height:48px;padding:var(--s3) var(--s4) var(--s3) 44px;border:1px solid var(--field-border);background:var(--field-bg);border-radius:var(--radius-control)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;stroke:var(--muted)}
+.tabs{display:flex;gap:var(--s2);flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:transparent;border-radius:var(--radius-control);padding:var(--s2) var(--s4);font-size:14px;cursor:pointer;min-height:44px}
+.tab[aria-selected="true"]{background:var(--btn-bg);color:var(--btn-text);border-color:var(--btn-bg);font-weight:700}
+.tab .n{opacity:.7;margin-left:6px;font-size:12px}
+.result-count{font-size:14px;color:var(--muted);margin:calc(-1 * var(--s2)) 0 var(--s4)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:var(--s6)}
+.card{background:var(--surface);display:flex;flex-direction:column;border-top:2px solid var(--aqua)}
+.card .body{padding:var(--s4) var(--s6) var(--s6);display:flex;flex-direction:column;gap:var(--s2);flex:1}
+.card h3{font-size:16px;line-height:1.3}
+.card p.desc{font-size:13px;flex:1}
+.card .price{font-size:13px;padding-top:var(--s3);margin-top:var(--s2);border-top:1px solid var(--line-soft)}
+.card .price strong{font-size:20px}
+.card .price span{color:var(--muted)}
+.card .price .quote{font-size:16px;font-weight:700;color:var(--muted)}
+.thumb{background:#FFFFFF;aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden;position:relative}
+.thumb img{width:100%;height:100%;object-fit:contain;padding:var(--s3)}
+.thumb.fallback{background:var(--tile)}
+.thumb.fallback svg{width:42%;height:42%;stroke:var(--aqua)}
+.thumb.fallback::after{content:"";position:absolute;right:0;bottom:0;width:28%;aspect-ratio:1;background:var(--aqua);opacity:.18;border-top-left-radius:100%}
+.pop .thumb{aspect-ratio:1}
+.pop .thumb img{padding:var(--s1)}
+.stepper{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:var(--radius-control);overflow:hidden;width:max-content}
+.stepper button{border:0;background:transparent;width:44px;height:44px;font-size:20px;font-weight:700;cursor:pointer;color:var(--text)}
+.stepper input{width:52px;height:44px;border:0;border-left:1px solid var(--line-soft);border-right:1px solid var(--line-soft);text-align:center;background:var(--field-bg);font-weight:700;-moz-appearance:textfield}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.card .actions{margin-top:var(--s3)}
+.more{display:flex;justify-content:center;margin-top:var(--s8)}
+.empty{padding:var(--s12) 0;text-align:center;color:var(--muted)}
+.special{margin-top:var(--s12);display:grid;grid-template-columns:1.2fr 1fr;gap:var(--s8);align-items:center;padding:var(--s8);background:var(--surface);border-left:2px solid var(--aqua)}
+.special h3{font-size:22px;margin-bottom:var(--s2)}
+
+/* ---------- Process ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s6)}
+.step{border-top:1px solid var(--line);padding-top:var(--s4)}
+.step .num{font-size:36px;font-weight:700;color:var(--aqua);line-height:1}
+.step h3{font-size:17px;margin:var(--s3) 0 var(--s2)}
+.step p{font-size:14px}
+
+/* ---------- Guarantee / footer ---------- */
+.guarantee{background:#222C49;color:#fff;padding:var(--s16) 0}
+.guarantee .grid2{display:grid;grid-template-columns:1fr 1.3fr;gap:var(--s12);align-items:start}
+.guarantee .logo{display:block;width:150px;height:auto;margin-bottom:var(--s8)}
+.guarantee .eyebrow{color:#8FC6CB}
+.guarantee h2{font-size:clamp(28px,4vw,44px);margin-top:var(--s3)}
+.guarantee p{font-size:16px;color:#E0F1F3}
+.guarantee .contact{margin-top:var(--s6);padding-top:var(--s6);border-top:1px solid #46999F;font-size:14px;color:#E0F1F3}
+footer{background:#222C49;color:#E0F1F3;font-size:13px;padding:var(--s6) 0 var(--s8);border-top:1px solid #33405F}
+footer .wrap{display:flex;justify-content:space-between;gap:var(--s4);flex-wrap:wrap}
+footer button{color:#8FC6CB}
+
+/* ---------- Drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(15,21,38,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+.scrim.open{opacity:1;pointer-events:auto}
+aside.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--surface);z-index:50;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+aside.drawer.open{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:var(--s4) var(--s6);border-bottom:1px solid var(--line-soft)}
+.drawer-head h2{font-size:22px}
+.icon-btn{border:0;background:transparent;width:44px;height:44px;cursor:pointer;display:grid;place-items:center;border-radius:var(--radius-control)}
+.icon-btn svg{width:22px;height:22px;stroke:var(--text)}
+.drawer-body{overflow:auto;padding:var(--s6);flex:1}
+.items{list-style:none;margin:0 0 var(--s4);padding:0}
+.items li{display:grid;grid-template-columns:1fr auto;gap:var(--s2) var(--s3);align-items:center;padding:var(--s3) 0;border-bottom:1px solid var(--line-soft)}
+.items li strong{display:block;font-size:14px;line-height:1.3}
+.items li span{font-size:12px;color:var(--muted)}
+.items li .ctl{display:flex;align-items:center;gap:var(--s3)}
+.items .stepper button{width:36px;height:36px;font-size:18px}
+.items .stepper input{width:44px;height:36px}
+.remove{border:0;background:transparent;color:var(--muted);text-decoration:underline;font-size:13px;cursor:pointer;min-height:36px}
+.estimate{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin:var(--s2) 0 var(--s2)}
+.estimate strong{font-size:18px}
+.fine{font-size:12px;color:var(--muted)}
+.addline{display:grid;grid-template-columns:1fr 84px auto;gap:var(--s2);margin:var(--s6) 0 var(--s8);padding:var(--s4);background:var(--tile)}
+.addline label{grid-column:1 / -1;font-size:13px;font-weight:700}
+.addline input{min-height:44px;padding:var(--s2) var(--s3);border:1px solid var(--field-border);background:var(--field-bg);border-radius:var(--radius-control);width:100%}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:var(--s4)}
+.field label{font-size:13px;font-weight:700}
+.field label .opt{font-weight:400;color:var(--muted)}
+.field input,.field select,.field textarea{min-height:44px;padding:var(--s2) var(--s3);border:1px solid var(--field-border);background:var(--field-bg);border-radius:var(--radius-control);width:100%}
+.field textarea{min-height:80px;resize:vertical}
+.field .hint{font-size:12px;color:var(--muted)}
+.field.invalid input,.field.invalid select{border-color:var(--orange);box-shadow:inset 0 0 0 1px var(--orange)}
+.form-title{font-size:16px;margin-bottom:var(--s4);padding-top:var(--s2)}
+.done{text-align:center;padding:var(--s12) var(--s4)}
+.done svg{width:64px;height:64px;margin-bottom:var(--s4)}
+.done h3{font-size:22px;margin-bottom:var(--s3)}
+.done .ref{display:inline-block;margin:var(--s4) 0;padding:var(--s2) var(--s4);background:var(--tile);font-weight:700;letter-spacing:.04em}
+.done .actions{display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:center;margin-top:var(--s6)}
+.empty-cart{color:var(--muted);font-size:14px;padding:var(--s2) 0 var(--s4)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--btn-bg);color:var(--btn-text);padding:var(--s3) var(--s6);font-size:14px;font-weight:700;z-index:60;border-radius:var(--radius-control)}
+
+/* ---------- Print sheet ---------- */
+#printSheet{display:none}
+@media print{
+  body{background:#fff;color:#000}
+  body > *:not(#printSheet){display:none!important}
+  #printSheet{display:block;font-size:12px;padding:0}
+  #printSheet img{width:110px;margin-bottom:16px}
+  #printSheet h1{font-size:20px;margin:0 0 4px}
+  #printSheet table{width:100%;border-collapse:collapse;margin:16px 0}
+  #printSheet th,#printSheet td{text-align:left;padding:6px 8px;border-bottom:1px solid #9CC9CE;vertical-align:top}
+  #printSheet th{font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  #printSheet .num{text-align:right;white-space:nowrap}
+  #printSheet dl{display:grid;grid-template-columns:160px 1fr;gap:4px 12px;margin:12px 0}
+  #printSheet dt{font-weight:700}
+  #printSheet dd{margin:0}
+  #printSheet .small{font-size:10px;color:#1F656F;margin-top:16px}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1000px){ .popular{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:900px){
+  .steps{grid-template-columns:1fr 1fr}
+  .guarantee .grid2,.special{grid-template-columns:1fr;gap:var(--s6)}
+  nav.main{display:none}
+  .lang{margin-left:auto}
+}
+@media (max-width:600px){
+  .wrap{padding:0 var(--s4)}
+  .top .wrap{gap:var(--s3);height:64px}
+  .brand img{height:22px}
+  .brand .for{display:none}
+  #openCart .label{display:none}
+  #openCart{padding:var(--s2) var(--s3)}
+  .hero{padding:calc(26vw + var(--s4)) 0 var(--s12)}
+  .hero .accent{width:26vw;height:26vw}
+  .facts{grid-template-columns:1fr;gap:var(--s3)}
+  .popular{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  form .row{grid-template-columns:1fr;gap:0}
+  .addline{grid-template-columns:1fr 72px}
+  .addline .btn{grid-column:1 / -1}
+  .special{padding:var(--s6)}
+  .gate-box{padding:var(--s8) var(--s6)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- =================== Acceso =================== -->
+<div class="gate" id="gate">
+  <div class="accent" aria-hidden="true"></div>
+  <form class="gate-box" id="gateForm" autocomplete="off">
+    <picture>
+      <source srcset="../assets/logo-white.png" media="(prefers-color-scheme: dark)">
+      <img src="../assets/logo-color.png" alt="Colonial" width="850" height="651">
+    </picture>
+    <span class="eyebrow">Portal privado · DHL Aero Expreso</span>
+    <h1>Bienvenido a su portal de compras</h1>
+    <p>Ingrese el código de acceso que le compartió su ejecutiva de Colonial.</p>
+    <div class="field">
+      <label for="code">Código de acceso</label>
+      <input id="code" name="code" type="password" required autocomplete="current-password" autocapitalize="characters" spellcheck="false">
+    </div>
+    <label class="remember"><input type="checkbox" id="remember" checked> Recordar en este equipo</label>
+    <button class="btn block" type="submit" id="gateBtn">Entrar</button>
+    <p class="gate-error" id="gateError" role="alert" hidden>El código no es correcto. Verifíquelo e intente de nuevo.</p>
+    <p class="gate-help">¿No tiene el código? Escríbanos a <a href="mailto:m.morgan@colonialenterprise.com">m.morgan@colonialenterprise.com</a></p>
+  </form>
+</div>
+
+<!-- =================== Portal =================== -->
+<div id="app" hidden>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">
+      <picture>
+        <source srcset="../assets/wordmark-white.png" media="(prefers-color-scheme: dark)">
+        <img src="../assets/wordmark-navy.png" alt="Colonial" width="850" height="169">
+      </picture>
+      <span class="for" data-i18n="brand.for">para DHL Aero Expreso</span>
+    </a>
+    <nav class="main">
+      <a href="#frecuentes" data-i18n="nav.popular">Lo más pedido</a>
+      <a href="#catalogo" data-i18n="nav.catalog">Catálogo</a>
+      <a href="#proceso" data-i18n="nav.process">Cómo funciona</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <button class="btn" type="button" id="openCart">
+      <span class="label" data-i18n="cart.button">Mi pedido</span>
+      <span class="badge" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="accent" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="inner">
+        <span class="eyebrow" data-i18n="hero.eyebrow">Portal de compras para DHL Aero Expreso</span>
+        <h1 data-i18n="hero.title">Lo que su equipo pide, en un solo lugar.</h1>
+        <p class="lead" data-i18n="hero.lead">Precios acordados para DHL. Arme su pedido, envíelo y reciba la propuesta formal para Basware en menos de 12 horas hábiles.</p>
+        <div class="actions">
+          <a class="btn" href="#catalogo" data-i18n="hero.cta">Ver catálogo</a>
+          <button class="btn secondary" type="button" id="repeatBtn" hidden data-i18n="hero.repeat">Repetir mi último pedido</button>
+        </div>
+        <div class="facts">
+          <div><strong data-i18n="f1.t">Menos de 12 horas hábiles</strong><span data-i18n="f1.d">Para recibir su propuesta formal</span></div>
+          <div><strong data-i18n="f2.t">Lista para Basware</strong><span data-i18n="f2.d">Con el propósito y los datos que pide su PO</span></div>
+          <div><strong data-i18n="f3.t">Pago a 31 días fin de mes</strong><span data-i18n="f3.d">Término Y310, como en sus órdenes actuales</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="frecuentes">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="pop.eyebrow">Para pedir en un clic</span>
+          <h2 data-i18n="pop.title">Lo más pedido por su equipo</h2>
+        </div>
+      </div>
+      <div class="popular" id="popular"></div>
+    </div>
+  </section>
+
+  <section class="block" id="catalogo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="cat.eyebrow">Catálogo DHL</span>
+          <h2 data-i18n="cat.title">Productos y servicios que ya le hemos entregado</h2>
+        </div>
+        <p class="note" data-i18n="cat.note">Precios en US$ antes de ITBMS. Las imágenes son de referencia. El precio final se confirma en la propuesta.</p>
+      </div>
+      <div class="toolbar">
+        <label class="search">
+          <span class="sr-only" data-i18n="cat.searchLabel">Buscar</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input type="search" id="search" autocomplete="off">
+        </label>
+        <div class="tabs" role="tablist" id="tabs"></div>
+      </div>
+      <p class="result-count" id="resultCount" aria-live="polite"></p>
+      <div class="grid" id="grid"></div>
+      <div class="more" id="moreWrap" hidden><button class="btn secondary" type="button" id="moreBtn"></button></div>
+      <p class="empty" id="empty" hidden data-i18n="cat.empty">No encontramos resultados. Agréguelo como solicitud especial y lo conseguimos.</p>
+
+      <div class="special">
+        <div>
+          <h3 data-i18n="sp.title">¿No está en el catálogo?</h3>
+          <p data-i18n="sp.text">Descríbalo y lo agregamos a su pedido. Conseguimos productos, servicios y proveedores nuevos a través de nuestra gestión de compra.</p>
+        </div>
+        <div><button class="btn" type="button" id="specialBtn" data-i18n="sp.cta">Agregar solicitud especial</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="proceso">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" data-i18n="proc.eyebrow">Cómo funciona</span>
+          <h2 data-i18n="proc.title">Del pedido a la entrega, en cuatro pasos</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="num">01</div><h3 data-i18n="p1.t">Arme su pedido</h3><p data-i18n="p1.d">Elija cantidades y agregue lo que no esté en el catálogo.</p></div>
+        <div class="step"><div class="num">02</div><h3 data-i18n="p2.t">Reciba la propuesta</h3><p data-i18n="p2.d">Le enviamos la propuesta formal en menos de 12 horas hábiles.</p></div>
+        <div class="step"><div class="num">03</div><h3 data-i18n="p3.t">Emita su PO en Basware</h3><p data-i18n="p3.d">Use el número de propuesta y el propósito de su pedido.</p></div>
+        <div class="step"><div class="num">04</div><h3 data-i18n="p4.t">Entregamos y facturamos</h3><p data-i18n="p4.d">Confirmamos su PO, entregamos en la fecha acordada y facturamos a 31 días fin de mes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guarantee" id="contacto">
+    <div class="wrap grid2">
+      <div>
+        <img class="logo" src="../assets/logo-white.png" alt="Colonial" width="850" height="651">
+        <span class="eyebrow" data-i18n="g.eyebrow">Nuestra garantía</span>
+        <h2 data-i18n="g.title">Simple y flexible es posible.</h2>
+      </div>
+      <div>
+        <p data-i18n="g.text">Cumplimos la fecha de entrega con productos y servicios completos y en perfecto estado. Respondemos toda consulta en menos de 12 horas hábiles. Si no se cumple, corregimos la situación y le damos un 30% de descuento en su próxima compra.</p>
+        <div class="contact">
+          Colonial Enterprises, S.A. · m.morgan@colonialenterprise.com<br>
+          BICSA Financial Center, piso 52, oficina 52-11 · Avenida Balboa, Ciudad de Panamá
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Colonial Enterprises, S.A. · <span data-i18n="footer.private">Portal privado para DHL Aero Expreso</span></span>
+    <button class="linkbtn" type="button" id="logoutBtn" data-i18n="footer.logout">Salir de este equipo</button>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="drawerTitle" role="dialog">
+  <div class="drawer-head">
+    <h2 id="drawerTitle" data-i18n="cart.title">Mi pedido</h2>
+    <button class="icon-btn" type="button" id="closeCart" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body">
+    <div id="cartView">
+      <ul class="items" id="items"></ul>
+      <p class="empty-cart" id="emptyCart" data-i18n="cart.empty">Su pedido está vacío. Agregue productos desde el catálogo o escriba una solicitud especial aquí abajo.</p>
+      <div id="estimateWrap" hidden>
+        <div class="estimate"><span data-i18n="cart.estimate">Subtotal estimado</span><strong id="estimateValue"></strong></div>
+        <p class="fine" id="estimateNote"></p>
+      </div>
+
+      <div class="addline">
+        <label for="customText" data-i18n="cart.addLabel">Solicitud especial (algo que no está en el catálogo)</label>
+        <input id="customText" maxlength="200">
+        <input id="customQty" type="number" min="1" value="1" aria-label="Cantidad">
+        <button class="btn small secondary" type="button" id="customAdd" data-i18n="cart.add">Agregar</button>
+      </div>
+
+      <form id="quoteForm" novalidate>
+        <h3 class="form-title" data-i18n="form.title">Datos para su propuesta y su PO</h3>
+        <div class="row">
+          <div class="field"><label for="f-name" data-i18n="form.name">Nombre completo</label><input id="f-name" name="nombre" required autocomplete="name"></div>
+          <div class="field"><label for="f-area" data-i18n="form.area">Área o departamento</label><input id="f-area" name="area" required list="areas"></div>
+        </div>
+        <datalist id="areas"><option value="Administración"><option value="Operaciones"><option value="MCC"><option value="DAE"><option value="DYQ"><option value="Recursos Humanos"><option value="IT"><option value="Seguridad"><option value="Comercial"></datalist>
+        <div class="row">
+          <div class="field"><label for="f-email" data-i18n="form.email">Correo</label><input id="f-email" name="correo" type="email" required autocomplete="email" placeholder="nombre.apellido@dhl.com"></div>
+          <div class="field"><label for="f-phone" data-i18n="form.phone">Teléfono o extensión</label><input id="f-phone" name="telefono" type="tel" required autocomplete="tel"></div>
+        </div>
+        <div class="field">
+          <label for="f-purpose" data-i18n="form.purpose">Propósito</label>
+          <input id="f-purpose" name="proposito" required maxlength="80">
+          <span class="hint" data-i18n="form.purposeHint">Así aparecerá en su PO de Basware. Ejemplo: Audífonos para nuevo personal de MCC.</span>
+        </div>
+        <div class="row">
+          <div class="field"><label for="f-date" data-i18n="form.date">Fecha deseada de entrega</label><input id="f-date" name="fecha_entrega" type="date" required></div>
+          <div class="field"><label for="f-place" data-i18n="form.place">Lugar de entrega</label><input id="f-place" name="lugar_entrega" required></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="f-cc"><span data-i18n="form.cc">Centro de costo</span> <span class="opt" data-i18n="form.optional">(opcional)</span></label><input id="f-cc" name="centro_costo"></div>
+          <div class="field"><label for="f-po"><span data-i18n="form.po">N.º de PO, si ya existe</span> <span class="opt" data-i18n="form.optional">(opcional)</span></label><input id="f-po" name="po" placeholder="26PA0…"></div>
+        </div>
+        <div class="field"><label for="f-notes"><span data-i18n="form.notes">Comentarios</span> <span class="opt" data-i18n="form.optional">(opcional)</span></label><textarea id="f-notes" name="comentarios"></textarea></div>
+        <button class="btn block" type="submit" id="submitBtn" data-i18n="form.submit">Enviar pedido</button>
+        <p class="fine" id="formError" role="alert" hidden data-i18n="form.error" style="color:var(--danger);margin-top:12px">Complete los campos marcados y agregue al menos un producto o una solicitud especial.</p>
+        <p class="fine" style="margin-top:12px" data-i18n="form.fine">Le respondemos en menos de 12 horas hábiles con la propuesta formal.</p>
+      </form>
+    </div>
+    <div class="done" id="doneView" hidden>
+      <svg viewBox="-80 -80 160 160" aria-hidden="true"><circle r="72" fill="none" stroke="#46999F" stroke-width="4"/><path d="M-30 2l20 20 40-42" fill="none" stroke="#1F656F" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3 data-i18n="done.title">Recibimos su pedido</h3>
+      <p data-i18n="done.text">Le enviaremos la propuesta formal en menos de 12 horas hábiles. Su número de referencia es:</p>
+      <div class="ref" id="doneRef"></div>
+      <div class="actions">
+        <button class="btn" type="button" id="printBtn" data-i18n="done.print">Imprimir o guardar PDF</button>
+        <button class="btn secondary" type="button" id="newOrder" data-i18n="done.again">Nuevo pedido</button>
+      </div>
+    </div>
+  </div>
+</aside>
+</div>
+
+<div id="printSheet" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="data.js"></script>
+<script>
+/* =====================================================================
+   CONFIGURACIÓN
+   ===================================================================== */
+const CONFIG = {
+  formEndpoint: "https://formspree.io/f/mbgozrgl",
+  currency: "USD",
+  pageSize: 20,
+  client: "DHL Aero Expreso S.A."
+};
+const CATEGORIES = {
+  tecnologia:    { es:"Tecnología",               en:"Technology" },
+  oficina:       { es:"Oficina e instalaciones",  en:"Office & facilities" },
+  mantenimiento: { es:"Mantenimiento",            en:"Maintenance" },
+  eventos:       { es:"Eventos y bienestar",      en:"Events & wellness" }
+};
+const UNITS = {
+  u:["por unidad","per unit"], s:["por servicio","per service"], k:["por juego","per set"],
+  p:["por paquete","per pack"], d:["por día","per day"], h:["por hora","per hour"], pp:["por persona","per person"]
+};
+const ICONS = {
+  tecnologia:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6"/><rect x="17" y="14" width="4" height="6"/></svg>',
+  oficina:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V5h10v16"/><path d="M14 9h6v12"/><path d="M7 9h4M7 13h4M7 17h4"/></svg>',
+  mantenimiento:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
+  eventos:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18M3 12h18"/></svg>'
+};
+
+/* =====================================================================
+   TEXTOS
+   ===================================================================== */
+const EN = {
+  "brand.for":"for DHL Aero Expreso","nav.popular":"Most ordered","nav.catalog":"Catalog","nav.process":"How it works","cart.button":"My order",
+  "hero.eyebrow":"Procurement portal for DHL Aero Expreso","hero.title":"What your team orders, in one place.",
+  "hero.lead":"Agreed prices for DHL. Build your order, send it, and receive the formal proposal for Basware in under 12 business hours.",
+  "hero.cta":"View catalog","hero.repeat":"Repeat my last order",
+  "f1.t":"Under 12 business hours","f1.d":"To receive your formal proposal","f2.t":"Ready for Basware","f2.d":"With the purpose and details your PO needs",
+  "f3.t":"Net 31 days after month end","f3.d":"Term Y310, as in your current orders",
+  "pop.eyebrow":"One-click ordering","pop.title":"What your team orders most",
+  "cat.eyebrow":"DHL catalog","cat.title":"Products and services we have already delivered to you",
+  "cat.note":"Prices in US$ before ITBMS tax. Images are for reference. The final price is confirmed in the proposal.",
+  "cat.searchLabel":"Search","cat.empty":"No results. Add it as a special request and we will source it.",
+  "sp.title":"Not in the catalog?","sp.text":"Describe it and we add it to your order. We source new products, services and suppliers through our purchase management.","sp.cta":"Add special request",
+  "proc.eyebrow":"How it works","proc.title":"From order to delivery, in four steps",
+  "p1.t":"Build your order","p1.d":"Choose quantities and add anything that is not in the catalog.",
+  "p2.t":"Receive the proposal","p2.d":"We send the formal proposal in under 12 business hours.",
+  "p3.t":"Raise your PO in Basware","p3.d":"Use the proposal number and the purpose of your order.",
+  "p4.t":"We deliver and invoice","p4.d":"We confirm your PO, deliver on the agreed date and invoice net 31 days after month end.",
+  "g.eyebrow":"Our guarantee","g.title":"Simple and flexible is possible.",
+  "g.text":"We meet the delivery date with complete products and services in perfect condition. We answer every inquiry in under 12 business hours. If we fall short, we fix it and give you 30% off your next purchase.",
+  "footer.private":"Private portal for DHL Aero Expreso","footer.logout":"Sign out on this device",
+  "cart.title":"My order","cart.empty":"Your order is empty. Add products from the catalog or type a special request below.",
+  "cart.estimate":"Estimated subtotal","cart.addLabel":"Special request (something not in the catalog)","cart.add":"Add",
+  "form.title":"Details for your proposal and PO","form.name":"Full name","form.area":"Area or department","form.email":"Email","form.phone":"Phone or extension",
+  "form.purpose":"Purpose","form.purposeHint":"This is how it will appear on your Basware PO. Example: Headsets for new MCC staff.",
+  "form.date":"Desired delivery date","form.place":"Delivery location","form.cc":"Cost center","form.po":"PO number, if it already exists","form.optional":"(optional)",
+  "form.notes":"Comments","form.submit":"Send order","form.error":"Complete the highlighted fields and add at least one product or special request.",
+  "form.fine":"We reply in under 12 business hours with the formal proposal.",
+  "done.title":"We received your order","done.text":"We will send the formal proposal in under 12 business hours. Your reference number is:","done.print":"Print or save PDF","done.again":"New order"
+};
+const UI = {
+  es:{ all:"Todos", add:"Agregar", from:"", quote:"A cotizar", remove:"Quitar", qty:"Cantidad", search:"Buscar: audífonos, tinta, catering…", close:"Cerrar",
+       more:"Ver más", count:(n,t)=>`Mostrando ${n} de ${t}`, added:"Agregado a su pedido", repeated:"Agregamos su último pedido", special:"Solicitud especial",
+       estNote:(q)=> q ? `Antes de ITBMS. No incluye ${q} ítem(s) a cotizar.` : "Antes de ITBMS. Precio final en la propuesta.",
+       sendErr:"No pudimos enviar el pedido. Intente de nuevo en unos minutos o escríbanos a m.morgan@colonialenterprise.com.",
+       printTitle:"Solicitud de pedido", printFor:"Para", printRef:"Referencia", printDate:"Fecha", item:"Descripción", unitP:"Precio ref.", total:"Total ref.",
+       printNote:"Precios de referencia en US$ antes de ITBMS. La propuesta formal de Colonial confirma precios y disponibilidad." },
+  en:{ all:"All", add:"Add", from:"", quote:"Quote on request", remove:"Remove", qty:"Quantity", search:"Search: headsets, ink, catering…", close:"Close",
+       more:"Show more", count:(n,t)=>`Showing ${n} of ${t}`, added:"Added to your order", repeated:"We added your last order", special:"Special request",
+       estNote:(q)=> q ? `Before ITBMS tax. Excludes ${q} item(s) to be quoted.` : "Before ITBMS tax. Final price in the proposal.",
+       sendErr:"We could not send your order. Please try again in a few minutes or email m.morgan@colonialenterprise.com.",
+       printTitle:"Order request", printFor:"For", printRef:"Reference", printDate:"Date", item:"Description", unitP:"Ref. price", total:"Ref. total",
+       printNote:"Reference prices in US$ before ITBMS tax. Colonial's formal proposal confirms prices and availability." }
+};
+const FIELD_LABELS = {nombre:"Nombre",area:"Área",correo:"Correo",telefono:"Teléfono",proposito:"Propósito",fecha_entrega:"Fecha deseada",lugar_entrega:"Lugar de entrega",centro_costo:"Centro de costo",po:"PO",comentarios:"Comentarios"};
+
+/* =====================================================================
+   Utilidades y estado
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+let lang = store.get("dhl.lang", "es");
+let CATALOG = [], POPULAR = [], byId = () => null;
+let cart = store.get("dhl.cart", {});        // { id: qty }
+let custom = store.get("dhl.custom", []);    // [{text, qty}]
+let activeCat = "all", query = "", shown = CONFIG.pageSize;
+const money = n => "US$ " + new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+
+/* =====================================================================
+   Acceso: el catálogo viene cifrado (AES-GCM, clave derivada del código)
+   ===================================================================== */
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function unlock(code){
+  const V = window.DHL_VAULT;
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(code.trim().toUpperCase()), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({ name:"PBKDF2", salt:b64(V.salt), iterations:V.iter, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, false, ["decrypt"]);
+  const plain = await crypto.subtle.decrypt({ name:"AES-GCM", iv:b64(V.iv) }, key, b64(V.ct));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+async function tryUnlock(code, remember){
+  try {
+    const data = await unlock(code);
+    if (remember) store.set("dhl.code", code.trim().toUpperCase());
+    start(data);
+    return true;
+  } catch(e) { return false; }
+}
+$("#gateForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("#gateBtn").disabled = true; $("#gateError").hidden = true;
+  const ok = await tryUnlock($("#code").value, $("#remember").checked);
+  $("#gateBtn").disabled = false;
+  if (!ok) { $("#gateError").hidden = false; $("#code").select(); }
+});
+$("#logoutBtn").addEventListener("click", () => {
+  ["dhl.code","dhl.cart","dhl.custom","dhl.last","dhl.me"].forEach(store.del);
+  location.reload();
+});
+
+/* =====================================================================
+   Portal
+   ===================================================================== */
+function start(data){
+  CATALOG = data.rows.map(([id,cat,price,unit,esN,esD,enN,enD,img]) => ({
+    id, cat, price, img, unit:(UNITS[unit]||UNITS.u),
+    es:{ name:esN, desc:esD }, en:{ name:enN, desc:enD }
+  }));
+  const map = new Map(CATALOG.map(p => [p.id, p]));
+  byId = id => map.get(id);
+  POPULAR = (data.popular || []).map(byId).filter(Boolean);
+  Object.keys(cart).forEach(id => { if (!byId(id)) delete cart[id]; });
+  $("#gate").hidden = true; $("#app").hidden = false;
+  document.title = "Colonial · Compras DHL";
+  prefillMe();
+  applyLang();
+}
+
+function thumb(p, small){
+  const alt = esc(p[lang].name);
+  const fb = `<div class="thumb fallback" aria-hidden="true">${ICONS[p.cat]}</div>`;
+  if (!p.img) return fb;
+  return `<div class="thumb"><img src="${esc(p.img)}" alt="${alt}" loading="lazy" decoding="async" referrerpolicy="no-referrer" ${small?'width="72" height="72"':''} onerror="this.parentNode.outerHTML=decodeURIComponent('${encodeURIComponent(fb)}')"></div>`;
+}
+function priceHTML(p){
+  return p.price == null
+    ? `<span class="quote">${UI[lang].quote}</span>`
+    : `<strong>${money(p.price)}</strong> <span>${p.unit[lang==="es"?0:1]}</span>`;
+}
+function control(p){
+  const q = cart[p.id];
+  if (!q) return `<button class="btn small" type="button" data-add="${p.id}">${UI[lang].add}</button>`;
+  return `<div class="stepper" data-step="${p.id}">
+    <button type="button" data-d="-1" aria-label="−">−</button>
+    <input type="number" min="0" value="${q}" aria-label="${UI[lang].qty}: ${esc(p[lang].name)}">
+    <button type="button" data-d="1" aria-label="+">+</button></div>`;
+}
+function bindControls(root){
+  root.querySelectorAll("[data-add]").forEach(b => b.addEventListener("click", () => { setQty(b.dataset.add, 1); toast(UI[lang].added); }));
+  root.querySelectorAll("[data-step]").forEach(s => {
+    const id = s.dataset.step, inp = s.querySelector("input");
+    s.querySelectorAll("button").forEach(b => b.addEventListener("click", () => setQty(id, (cart[id]||0) + Number(b.dataset.d))));
+    inp.addEventListener("change", () => setQty(id, parseInt(inp.value,10) || 0));
+  });
+}
+function setQty(id, q){
+  if (q <= 0) delete cart[id]; else cart[id] = Math.min(q, 9999);
+  save(); renderGrid(); renderPopular(); renderCart();
+}
+function save(){ store.set("dhl.cart", cart); store.set("dhl.custom", custom); }
+
+/* ---------- Idioma ---------- */
+const ES = {};
+document.querySelectorAll("[data-i18n]").forEach(el => ES[el.dataset.i18n] = el.textContent);
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.dataset.i18n; el.textContent = (lang === "en" && EN[k]) ? EN[k] : ES[k];
+  });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  $("#search").placeholder = UI[lang].search;
+  $("#closeCart").setAttribute("aria-label", UI[lang].close);
+  $("#repeatBtn").hidden = !store.get("dhl.last", null);
+  renderTabs(); renderGrid(); renderPopular(); renderCart();
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => { lang = b.dataset.lang; store.set("dhl.lang", lang); applyLang(); }));
+
+/* ---------- Lo más pedido ---------- */
+function renderPopular(){
+  $("#popular").innerHTML = POPULAR.map(p => `<div class="pop">
+    ${thumb(p, true)}
+    <div><strong>${esc(p[lang].name)}</strong><span class="p">${p.price==null?UI[lang].quote:money(p.price)}</span></div>
+    <div class="row">${control(p)}</div></div>`).join("");
+  bindControls($("#popular"));
+}
+
+/* ---------- Catálogo ---------- */
+function visible(){
+  const q = norm(query.trim());
+  return CATALOG.filter(p => (activeCat === "all" || p.cat === activeCat) &&
+    (!q || norm(`${p.es.name} ${p.es.desc} ${p.en.name} ${p.en.desc} ${CATEGORIES[p.cat].es} ${CATEGORIES[p.cat].en}`).includes(q)));
+}
+function renderTabs(){
+  const tabs = [["all", UI[lang].all, CATALOG.length], ...Object.entries(CATEGORIES).map(([k,v]) => [k, v[lang], CATALOG.filter(p => p.cat === k).length])];
+  $("#tabs").innerHTML = tabs.map(([k,label,n]) => `<button class="tab" role="tab" type="button" data-cat="${k}" aria-selected="${k===activeCat}">${label}<span class="n">${n}</span></button>`).join("");
+  $("#tabs").querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => { activeCat = t.dataset.cat; shown = CONFIG.pageSize; renderTabs(); renderGrid(); }));
+}
+function renderGrid(){
+  const all = visible(), list = all.slice(0, shown);
+  $("#empty").hidden = all.length > 0;
+  $("#resultCount").textContent = all.length ? UI[lang].count(list.length, all.length) : "";
+  $("#moreWrap").hidden = all.length <= shown;
+  $("#moreBtn").textContent = UI[lang].more;
+  $("#grid").innerHTML = list.map(p => `<article class="card">
+      ${thumb(p)}
+      <div class="body">
+        <span class="eyebrow">${CATEGORIES[p.cat][lang]}</span>
+        <h3>${esc(p[lang].name)}</h3>
+        <p class="desc">${esc(p[lang].desc)}</p>
+        <div class="price">${priceHTML(p)}</div>
+        <div class="actions">${control(p)}</div>
+      </div></article>`).join("");
+  bindControls($("#grid"));
+}
+$("#search").addEventListener("input", e => { query = e.target.value; shown = CONFIG.pageSize; renderGrid(); });
+$("#moreBtn").addEventListener("click", () => { shown += CONFIG.pageSize; renderGrid(); });
+
+/* ---------- Pedido ---------- */
+function lines(){
+  const prod = Object.keys(cart).map(id => ({ p:byId(id), qty:cart[id] })).filter(x => x.p);
+  return { prod, custom };
+}
+function renderCart(){
+  const { prod } = lines();
+  const n = prod.length + custom.length;
+  $("#cartCount").textContent = n;
+  $("#emptyCart").hidden = n > 0;
+  $("#items").innerHTML =
+    prod.map(({p,qty}) => `<li>
+      <div><strong>${esc(p[lang].name)}</strong><span>${p.price==null?UI[lang].quote:money(p.price)+" "+p.unit[lang==="es"?0:1]}</span></div>
+      <div class="ctl">${control(p)}<button class="remove" type="button" data-remove="${p.id}">${UI[lang].remove}</button></div></li>`).join("") +
+    custom.map((c,i) => `<li>
+      <div><strong>${esc(c.text)}</strong><span>${UI[lang].special} · ${UI[lang].qty}: ${c.qty}</span></div>
+      <div class="ctl"><button class="remove" type="button" data-rmc="${i}">${UI[lang].remove}</button></div></li>`).join("");
+  bindControls($("#items"));
+  $("#items").querySelectorAll("[data-remove]").forEach(b => b.addEventListener("click", () => setQty(b.dataset.remove, 0)));
+  $("#items").querySelectorAll("[data-rmc]").forEach(b => b.addEventListener("click", () => { custom.splice(Number(b.dataset.rmc),1); save(); renderCart(); }));
+  const priced = prod.filter(x => x.p.price != null);
+  const toQuote = prod.length - priced.length + custom.length;
+  $("#estimateWrap").hidden = n === 0;
+  $("#estimateValue").textContent = money(priced.reduce((s,x) => s + x.p.price * x.qty, 0));
+  $("#estimateNote").textContent = UI[lang].estNote(toQuote);
+}
+$("#customAdd").addEventListener("click", () => {
+  const text = $("#customText").value.trim();
+  if (!text) { $("#customText").focus(); return; }
+  custom.push({ text, qty: Math.max(1, parseInt($("#customQty").value,10) || 1) });
+  $("#customText").value = ""; $("#customQty").value = 1; save(); renderCart();
+});
+$("#customText").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); $("#customAdd").click(); } });
+
+function openCart(focusSpecial){
+  $("#drawer").classList.add("open"); $("#scrim").classList.add("open"); $("#drawer").setAttribute("aria-hidden","false");
+  setTimeout(() => (focusSpecial ? $("#customText") : $("#closeCart")).focus(), 50);
+}
+function closeCart(){ $("#drawer").classList.remove("open"); $("#scrim").classList.remove("open"); $("#drawer").setAttribute("aria-hidden","true"); $("#openCart").focus(); }
+$("#openCart").addEventListener("click", () => openCart(false));
+$("#specialBtn").addEventListener("click", () => openCart(true));
+$("#closeCart").addEventListener("click", closeCart);
+$("#scrim").addEventListener("click", closeCart);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#drawer").classList.contains("open")) closeCart(); });
+
+$("#repeatBtn").addEventListener("click", () => {
+  const last = store.get("dhl.last", null); if (!last) return;
+  (last.prod || []).forEach(([id,q]) => { if (byId(id)) cart[id] = q; });
+  (last.custom || []).forEach(c => custom.push(c));
+  save(); renderGrid(); renderPopular(); renderCart(); toast(UI[lang].repeated); openCart(false);
+});
+
+/* ---------- Datos del solicitante (recordados en este equipo) ---------- */
+const ME_FIELDS = ["nombre","area","correo","telefono","lugar_entrega","centro_costo"];
+function prefillMe(){
+  const me = store.get("dhl.me", {});
+  ME_FIELDS.forEach(k => { const el = document.querySelector(`[name="${k}"]`); if (el && me[k]) el.value = me[k]; });
+}
+
+/* ---------- Envío ---------- */
+function makeRef(){
+  const d = new Date(), z = n => String(n).padStart(2,"0");
+  return `DHL-${String(d.getFullYear()).slice(2)}${z(d.getMonth()+1)}${z(d.getDate())}-${z(d.getHours())}${z(d.getMinutes())}${z(d.getSeconds())}`;
+}
+$("#quoteForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target; let ok = true;
+  form.querySelectorAll("[required]").forEach(f => {
+    const bad = !f.value.trim() || (f.type === "email" && !/^\S+@\S+\.\S+$/.test(f.value));
+    f.closest(".field").classList.toggle("invalid", bad);
+    if (bad) ok = false;
+  });
+  const { prod } = lines();
+  if (!prod.length && !custom.length) ok = false;
+  $("#formError").hidden = ok;
+  if (!ok) { const first = form.querySelector(".invalid input, .invalid select"); if (first) first.focus(); return; }
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  const ref = makeRef();
+  const prodLines = prod.map(({p,qty}) => `- ${qty} × ${p.es.name} · ${p.price==null ? "A cotizar" : money(p.price)+" "+p.unit[0]} · QB ${p.id}`);
+  const custLines = custom.map(c => `- ${c.qty} × [Especial] ${c.text}`);
+  const priced = prod.filter(x => x.p.price != null);
+  const subtotal = priced.reduce((s,x) => s + x.p.price * x.qty, 0);
+  const summary = [
+    `Pedido ${ref} · ${CONFIG.client}`, "",
+    ...Object.entries(FIELD_LABELS).map(([k,l]) => `${l}: ${data[k] || "-"}`), "",
+    "Productos y servicios:", ...prodLines, ...custLines, "",
+    `Subtotal de referencia (antes de ITBMS): ${money(subtotal)}`,
+    `Idioma del solicitante: ${lang.toUpperCase()}`
+  ].join("\n");
+
+  $("#submitBtn").disabled = true;
+  try {
+    const r = await fetch(CONFIG.formEndpoint, {
+      method:"POST", headers:{ "Accept":"application/json", "Content-Type":"application/json" },
+      body: JSON.stringify({ ...data, cliente: CONFIG.client, referencia: ref, email: data.correo,
+        productos: [...prodLines, ...custLines].join("\n"), subtotal_referencia: money(subtotal),
+        _subject: `Pedido DHL ${ref}: ${data.area} · ${data.nombre}`, resumen: summary })
+    });
+    if (!r.ok) throw new Error(r.status);
+  } catch(err) {
+    $("#submitBtn").disabled = false; alert(UI[lang].sendErr); return;
+  }
+  $("#submitBtn").disabled = false;
+
+  const me = {}; ME_FIELDS.forEach(k => me[k] = data[k] || ""); store.set("dhl.me", me);
+  store.set("dhl.last", { prod: prod.map(({p,qty}) => [p.id, qty]), custom: custom.slice() });
+  buildPrint(ref, data, prod, custom.slice(), subtotal);
+  cart = {}; custom = []; save();
+  form.querySelectorAll('[name="proposito"],[name="fecha_entrega"],[name="po"],[name="comentarios"]').forEach(el => el.value = "");
+  renderGrid(); renderPopular(); renderCart();
+  $("#repeatBtn").hidden = false;
+  $("#doneRef").textContent = ref;
+  $("#cartView").hidden = true; $("#doneView").hidden = false;
+});
+$("#quoteForm").addEventListener("input", e => { const f = e.target.closest(".field"); if (f) f.classList.remove("invalid"); });
+$("#newOrder").addEventListener("click",() => { $("#cartView").hidden = false; $("#doneView").hidden = true; });
+$("#printBtn").addEventListener("click", () => window.print());
+
+function buildPrint(ref, data, prod, cust, subtotal){
+  const L = UI[lang], unitIdx = lang === "es" ? 0 : 1;
+  const rows = prod.map(({p,qty}) => `<tr><td>${esc(p[lang].name)}</td><td class="num">${qty}</td>
+      <td class="num">${p.price==null?L.quote:money(p.price)}</td><td class="num">${p.price==null?"—":money(p.price*qty)}</td></tr>`).join("") +
+    cust.map(c => `<tr><td>${L.special}: ${esc(c.text)}</td><td class="num">${c.qty}</td><td class="num">${L.quote}</td><td class="num">—</td></tr>`).join("");
+  const dl = Object.entries(FIELD_LABELS).filter(([k]) => data[k]).map(([k,l]) => `<dt>${l}</dt><dd>${esc(data[k])}</dd>`).join("");
+  $("#printSheet").innerHTML = `<img src="../assets/logo-color.png" alt="Colonial">
+    <h1>${L.printTitle} · ${esc(ref)}</h1>
+    <div>${L.printFor}: ${CONFIG.client} · ${L.printDate}: ${new Date().toLocaleDateString(lang==="es"?"es-PA":"en-US")}</div>
+    <dl>${dl}</dl>
+    <table><thead><tr><th>${L.item}</th><th class="num">${L.qty}</th><th class="num">${L.unitP}</th><th class="num">${L.total}</th></tr></thead>
+    <tbody>${rows}</tbody>
+    <tfoot><tr><td colspan="3" class="num"><strong>Subtotal</strong></td><td class="num"><strong>${money(subtotal)}</strong></td></tr></tfoot></table>
+    <p class="small">${L.printNote}</p>
+    <p class="small">Colonial Enterprises, S.A. · m.morgan@colonialenterprise.com · BICSA Financial Center, piso 52, oficina 52-11, Ciudad de Panamá</p>`;
+}
+
+/* ---------- Toast ---------- */
+let toastT;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 1800); }
+
+/* ---------- Inicio ---------- */
+$("#year").textContent = new Date().getFullYear();
+$("#f-date").min = new Date(Date.now() + 864e5).toISOString().slice(0,10);
+(async () => {
+  const saved = store.get("dhl.code", null);
+  if (saved && !(await tryUnlock(saved, true))) store.del("dhl.code");
+  if ($("#app").hidden) $("#code").focus();
+})();
+</script>
+</body>
+</html>
