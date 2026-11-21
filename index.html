@@ -90,14 +90,16 @@ a { color: inherit; }
 
 /* ---------- hero (night) ---------- */
 .noche { background: radial-gradient(90% 60% at 50% 105%, var(--horizonte) 0%, transparent 70%), radial-gradient(120% 90% at 50% 0%, var(--noche-2) 0%, var(--noche) 62%); background-color: var(--noche); color: var(--blanco); position: relative; overflow: hidden; }
-.cortina { position: absolute; top: 0; bottom: 0; width: clamp(40px, 11vw, 150px); pointer-events: none; opacity: .5;
-  background: repeating-linear-gradient(90deg, rgba(255,255,255,.0) 0 14px, rgba(226,241,246,.22) 14px 22px, rgba(255,255,255,.05) 22px 34px);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
-  animation: velo 9s ease-in-out infinite; transform-origin: top center; }
-.cortina.izq { left: 0; border-bottom-right-radius: 100% 30%; }
-.cortina.der { right: 0; animation-delay: -4.5s; border-bottom-left-radius: 100% 30%; }
-@keyframes velo { 0%,100% { transform: skewX(0deg); } 50% { transform: skewX(2.5deg); } }
-.dunas { position: absolute; left: 0; right: 0; bottom: 40px; width: 100%; height: clamp(70px, 12vw, 150px); pointer-events: none; }
+/* Fondos fotográficos: oasis en la portada, farol sobre las dunas en el cierre */
+.fondo-oasis { background:
+  linear-gradient(180deg, rgba(8,18,42,.55) 0%, rgba(8,18,42,.30) 35%, rgba(8,18,42,.45) 75%, rgba(8,18,42,.75) 100%),
+  url("img/fondo-oasis.jpg") center 42% / cover no-repeat, var(--noche); }
+.fondo-farol { background:
+  linear-gradient(180deg, rgba(8,18,42,.80) 0%, rgba(8,18,42,.55) 45%, rgba(8,18,42,.45) 75%, rgba(8,18,42,.70) 100%),
+  url("img/fondo-farol.jpg") center 70% / cover no-repeat, var(--noche); }
+.fondo-oasis .nombres, .fondo-oasis .fecha, .fondo-oasis .eyebrow { filter: drop-shadow(0 2px 10px rgba(0,0,0,.55)); }
+.fondo-oasis .lugar, .fondo-oasis .hashtag { text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+.fondo-oasis .cuenta div, .fondo-farol .panel { background: rgba(8,18,42,.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 .logo { width: clamp(150px, 20vw, 210px); height: auto; aspect-ratio: 1; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); margin-bottom: -6px; }
 .logo-pie { width: 150px; }
 .oro-texto { background: linear-gradient(180deg, #fff3cf 0%, var(--oro-claro) 45%, var(--oro) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -131,13 +133,6 @@ a { color: inherit; }
 .cuenta b { display: block; font: 400 clamp(1.6rem, 4vw, 2.1rem)/1 var(--f-titulo); color: var(--blanco); font-variant-numeric: tabular-nums; }
 .cuenta small { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--oro-claro); }
 
-.faroles { position: absolute; top: 0; left: 0; right: 0; height: 0; pointer-events: none; }
-.farol { position: absolute; top: 0; transform-origin: top center; animation: mecer 6s ease-in-out infinite; }
-.farol svg { display: block; }
-.farol.f1 { left: 6%; animation-delay: -1s; }
-.farol.f2 { left: 18%; animation-delay: -3.5s; }
-.farol.f3 { right: 7%; animation-delay: -2s; }
-@keyframes mecer { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
 
 /* arch divider between night and day */
 .divisor { display: block; width: 100%; height: 56px; color: var(--blanco); }
@@ -309,7 +304,6 @@ input::placeholder { color: rgba(255,255,255,.45); }
   .arco { width: min(78%, 320px); }
   .hero-texto { order: -1; }
   .hero { padding-top: calc(env(safe-area-inset-top, 0px) + 64px); }
-  .farol.f2 { display: none; }
 }
 @media (max-width: 640px) {
   body { font-size: 16px; }
@@ -324,7 +318,6 @@ input::placeholder { color: rgba(255,255,255,.45); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .farol, .cortina { animation: none; }
   .fotos img { transition: none; }
 }
 </style>
@@ -357,19 +350,8 @@ input::placeholder { color: rgba(255,255,255,.45); }
 </div>
 
 <!-- ================= HERO ================= -->
-<header class="noche">
+<header class="noche fondo-oasis">
   <canvas id="cielo" aria-hidden="true"></canvas>
-  <div class="cortina izq" aria-hidden="true"></div><div class="cortina der" aria-hidden="true"></div>
-  <svg class="dunas" viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 150V96C140 70 260 60 400 78S640 120 800 92 1060 48 1200 70V150Z" fill="var(--arena)" fill-opacity=".16"/>
-    <path d="M0 150V118C180 96 330 92 480 108S760 140 920 116 1110 92 1200 100V150Z" fill="var(--arena)" fill-opacity=".26"/>
-  </svg>
-  <div class="faroles" aria-hidden="true">
-    <div class="farol f1"><svg width="46" height="170" viewBox="0 0 46 170"><line x1="23" y1="0" x2="23" y2="80" stroke="#f0d79a" stroke-opacity=".6"/><path d="M14 80h18l-3 8H17z" fill="#c49a3e"/><path d="M12 88h22c4 10 4 34 0 44H12c-4-10-4-34 0-44z" fill="#f0d79a" fill-opacity=".22" stroke="#c49a3e" stroke-width="1.5"/><ellipse cx="23" cy="110" rx="6" ry="10" fill="#ffe7a6" fill-opacity=".85"/><path d="M14 132h18l-4 8H18z" fill="#c49a3e"/><circle cx="23" cy="144" r="2.5" fill="#c49a3e"/></svg></div>
-    <div class="farol f2"><svg width="34" height="120" viewBox="0 0 46 170"><line x1="23" y1="0" x2="23" y2="80" stroke="#f0d79a" stroke-opacity=".6"/><path d="M14 80h18l-3 8H17z" fill="#c49a3e"/><path d="M12 88h22c4 10 4 34 0 44H12c-4-10-4-34 0-44z" fill="#f0d79a" fill-opacity=".22" stroke="#c49a3e" stroke-width="1.5"/><ellipse cx="23" cy="110" rx="6" ry="10" fill="#ffe7a6" fill-opacity=".85"/><path d="M14 132h18l-4 8H18z" fill="#c49a3e"/><circle cx="23" cy="144" r="2.5" fill="#c49a3e"/></svg></div>
-    <div class="farol f3"><svg width="40" height="200" viewBox="0 0 46 200"><line x1="23" y1="0" x2="23" y2="110" stroke="#f0d79a" stroke-opacity=".6"/><path d="M14 110h18l-3 8H17z" fill="#c49a3e"/><path d="M12 118h22c4 10 4 34 0 44H12c-4-10-4-34 0-44z" fill="#f0d79a" fill-opacity=".22" stroke="#c49a3e" stroke-width="1.5"/><ellipse cx="23" cy="140" rx="6" ry="10" fill="#ffe7a6" fill-opacity=".85"/><path d="M14 162h18l-4 8H18z" fill="#c49a3e"/><circle cx="23" cy="174" r="2.5" fill="#c49a3e"/></svg></div>
-  </div>
-
   <div class="wrap hero">
     <div class="hero-grid">
       <div class="arco filigrana"><img src="img/portada.jpg" alt="Miguel y Yorleyns abrazados" width="593" height="800"><svg class="e1" aria-hidden="true"><use href="#i-esquina"/></svg><svg class="e2" aria-hidden="true"><use href="#i-esquina"/></svg><svg class="e3" aria-hidden="true"><use href="#i-esquina"/></svg><svg class="e4" aria-hidden="true"><use href="#i-esquina"/></svg></div>
@@ -600,7 +582,7 @@ input::placeholder { color: rgba(255,255,255,.45); }
 <svg class="divisor" viewBox="0 0 1200 56" preserveAspectRatio="none" aria-hidden="true" style="background:var(--celeste-2);color:var(--noche);margin-bottom:-1px"><path fill="currentColor" d="M0 56V40h520c30 0 50-14 80-40 30 26 50 40 80 40h520v16z"/></svg>
 
 <!-- ================= RSVP + GIFTS + CONTACT ================= -->
-<section class="noche cierre" id="rsvp">
+<section class="noche cierre fondo-farol" id="rsvp">
   <canvas id="cielo2" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
   <div class="wrap" style="position:relative">
     <div class="sec-head">
